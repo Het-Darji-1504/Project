@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Nestora PropTech" />
+  <meta name="description" content="Nestora is a next-generation PropTech platform helping young adults and first-time renters find, compare, lease, share, and manage residential and commercial spaces with radical cost transparency." />
+  <meta name="theme-color" content="#4F46E5" />
+  <title>Nestora — Next-Gen PropTech & Transparent Living Platform</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="main.css" />
+</head>
+<body>
+
+  <!-- ==========================================================================
+       GLOBAL TOP NAVIGATION BAR
+       ========================================================================== -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <!-- Brand Logo -->
+      <div class="brand" onclick="navigateTo('landing')">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </div>
+        <div class="brand-name">
+          Nestora
+          <span class="brand-tag">Transparent</span>
+        </div>
+      </div>
+
+      <!-- Desktop Nav Links -->
+      <ul class="nav-links">
+        <li><a class="nav-link active" data-target="landing">Home</a></li>
+        <li><a class="nav-link" data-target="discovery">Find a Space</a></li>
+        <li><a class="nav-link" data-target="roommates">Roommates</a></li>
+        <li><a class="nav-link" data-target="valuation">Valuation</a></li>
+        <li><a class="nav-link" data-target="agreement">Agreement</a></li>
+        <li><a class="nav-link" data-target="dashboard">Tenant Hub</a></li>
+        <li><a class="nav-link" data-target="maintenance">Maintenance</a></li>
+      </ul>
+
+      <!-- Action Items & User Profile -->
+      <div class="nav-actions">
+        <!-- Role Toggle (Tenant / Owner) -->
+        <div class="role-badge-toggle" title="Switch between Tenant and Landlord mode">
+          <button class="role-btn active" id="role-btn-tenant">Tenant</button>
+          <button class="role-btn" id="role-btn-owner">Owner</button>
+        </div>
+
+        <!-- Notification Bell with Dynamic Counter -->
+        <button class="notif-bell-btn" onclick="toggleNotificationDrawer()" title="View notifications">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span class="notif-badge-count" id="notif-badge-counter">3</span>
+        </button>
+
+        <!-- User Quick Profile Pill -->
+        <div class="user-nav-profile" onclick="openProfileModal()" title="View account & verification">
+          <img src="—Pngtree—man avatar image for profile_13001882.png" alt="Het Darji" class="user-avatar" />
+          <span class="user-nav-name">Het Darji</span>
+          <span class="badge badge-verified" style="padding: 2px 6px; font-size: 0.7rem;">✓ Verified</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN CONTENT ROUTER CONTAINERS
+       ========================================================================== -->
+  <main id="main-content">
+
+    <!-- ----------------------------------------------------------------------
+         VIEW 1: LANDING / HOME PAGE
+         ---------------------------------------------------------------------- -->
+    <section class="view-panel active" id="view-landing">
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <div class="container hero-content">
+          <div class="hero-eyebrow">
+            <span>✨ The Transparent Living Platform</span><br><br>
+            <span>• Zero Brokerage Guarantee</span>
+          </div>
+          <h1 class="hero-title">
+            Find a place that fits your life — <br />
+            <span class="text-gradient">and your budget.</span>
+          </h1>
+          <p class="hero-subtitle">
+            Discover verified spaces, compatible roommates, transparent costs and smarter rental management — all in one place.
+          </p>
+
+          <!-- Large Search Component -->
+          <div class="hero-search-box">
+            <div class="search-fields-grid">
+              <!-- Location Field -->
+              <div class="search-field">
+                <label class="search-label">Location</label>
+                <select class="search-select" id="hero-city-select">
+                  <option value="Ahmedabad" selected>Ahmedabad (SG Highway, Bodakdev)</option>
+                  <option value="Gandhinagar">Gandhinagar (GIFT City, PDPU)</option>
+                  <option value="Vadodara">Vadodara</option>
+                  <option value="Surat">Surat</option>
+                  <option value="Mumbai">Mumbai (Bandra, Andheri)</option>
+                  <option value="Bengaluru">Bengaluru (HSR, Koramangala)</option>
+                  <option value="Pune">Pune (Kothrud, Viman Nagar)</option>
+                  <option value="Delhi">Delhi NCR (Gurugram, Noida)</option>
+                </select>
+              </div>
+
+              <!-- Property Type Field -->
+              <div class="search-field">
+                <label class="search-label">Property Type</label>
+                <select class="search-select" id="hero-type-select">
+                  <option value="All Types" selected>All Property Types</option>
+                  <option value="Apartment">Apartment (1/2/3 BHK)</option>
+                  <option value="PG">PG / Student Hostel</option>
+                  <option value="Shared Apartment">Shared Apartment</option>
+                  <option value="Studio">Studio Apartment</option>
+                  <option value="Co-working">Co-working Space</option>
+                  <option value="Office">Office</option>
+                  <option value="Commercial Space">Commercial Space</option>
+                </select>
+              </div>
+
+              <!-- Budget Range Field -->
+              <div class="search-field">
+                <label class="search-label">Budget</label>
+                <select class="search-select" id="hero-budget-select">
+                  <option value="all" selected>Any Budget</option>
+                  <option value="under-15k">Under ₹15,000/mo</option>
+                  <option value="15k-25k">₹15,000 – ₹25,000/mo</option>
+                  <option value="above-25k">Above ₹25,000/mo</option>
+                </select>
+              </div>
+
+              <!-- Move-in Date Field -->
+              <div class="search-field">
+                <label class="search-label">Move-in Date</label>
+                <select class="search-select" id="hero-time-select">
+                    <option value="Immediately" selected>Immediatly</option>
+                    <option value="Tommorow">Tommorow</option>
+                    <option value="Next Week">Next Week</option>
+                    <option value="Next Month">Next Month</option>
+                    <option value="2 Months Later">2 Months Later</option>
+                </select>
+              </div>
+
+              <!-- Search Button -->
+              <div>
+                <button class="search-btn" onclick="handleHeroSearch()">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trust Badges Bar -->
+          <div class="trust-bar">
+            <div class="trust-item">
+              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span>10,000+ Verified Spaces</span>
+            </div>
+            <div class="trust-item">
+              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+              <span>Transparent Pricing</span>
+            </div>
+            <div class="trust-item">
+              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span>Secure Agreements</span>
+            </div>  
+            <div class="trust-item">
+              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              <span>Smart Maintenance</span>
+            </div>
+          </div>
+
+          <!-- Featured Showcase Cards Collage -->
+          <div class="hero-collage-grid" id="hero-showcase-container">
+            <!-- Dynamically populated from data.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Radical Transparency Comparison Section -->
+      <section class="comparison-section">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag">Radical Transparency</span>
+            <h2 class="section-heading">Why Young Adults Choose Nestora</h2>
+            <p class="section-subheading">We eliminate hidden costs, confusing legal jargon, and roommate conflicts so you can lease with 100% confidence.</p>
+          </div>
+
+          <div class="comparison-grid">
+            <!-- Traditional Renting Card -->
+            <div class="compare-card traditional">
+              <span class="compare-badge badge-rose">Traditional Renting</span>
+              <ul class="compare-list">
+                <li class="compare-item">
+                  <span class="compare-icon-cross">✕</span>
+                  <span><strong>Hidden Monthly Charges:</strong> Surprise electricity surcharges, unexpected society fees, and unlisted parking costs.</span>
+                </li>
+                <li class="compare-item">
+                  <span class="compare-icon-cross">✕</span>
+                  <span><strong>Arbitrary Deposit Deductions:</strong> Landlords holding onto 2–3 months of deposit for arbitrary wear-and-tear.</span>
+                </li>
+                <li class="compare-item">
+                  <span class="compare-icon-cross">✕</span>
+                  <span><strong>Complicated Legal Contracts:</strong> 25-page legal agreements full of unfair indemnity and termination clauses.</span>
+                </li>
+                <li class="compare-item">
+                  <span class="compare-icon-cross">✕</span>
+                  <span><strong>Roommate Friction:</strong> No screening for sleep schedules, cleanliness, food habits, or bill splitting.</span>
+                </li>
+                <li class="compare-item">
+                  <span class="compare-icon-cross">✕</span>
+                  <span><strong>Delayed Repairs:</strong> Ghosting landlords who take weeks to fix broken geysers or leaking taps.</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Nestora Way Card -->
+            <div class="compare-card nestora">
+              <span class="compare-badge badge-verified">The Nestora Way</span>
+              <ul class="compare-list">
+                <li class="compare-item">
+                  <span class="compare-icon-check">✓</span>
+                  <span><strong>All-Inclusive Living Cost Breakdown:</strong> Itemized estimates for rent, power, Wi-Fi, and society maintenance before you book.</span>
+                </li>
+                <li class="compare-item">
+                  <span class="compare-icon-check">✓</span>
+                  <span><strong>Escrow Deposit Protection:</strong> Guaranteed 100% deposit refund released within 7 working days of fair inspection.</span>
+                </li>
+                <li class="compare-item">
+                  <span class="compare-icon-check">✓</span>
+                  <span><strong>Plain-English Agreements:</strong> 5 simplified clauses you can actually understand and sign via Aadhaar OTP.</span>
+                </li>
+                <li class="compare-item">
+                  <span class="compare-icon-check">✓</span>
+                  <span><strong>87%+ Roommate Compatibility:</strong> Algorithmic matching based on study habits, hygiene, and spending styles.</span>
+                </li>
+                <li class="compare-item">
+                  <span class="compare-icon-check">✓</span>
+                  <span><strong>Tracked Maintenance SLAs:</strong> 24–48 hour technician dispatch with live progress updates right on your phone.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Key Pillars Feature Grid -->
+      <section class="features-section">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag">End-to-End PropTech</span>
+            <h2 class="section-heading">Everything You Need To Live Well</h2>
+            <p class="section-subheading">A single cohesive platform designed around young renters and modern property owners.</p>
+          </div>
+
+          <div class="features-grid">
+            <div class="feature-box" onclick="navigateTo('discovery')">
+              <div class="feature-icon-box">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <h4>Verified Discovery</h4>
+              <p>Explore high-res photo galleries, 3D walkthroughs, verified landlords, and interactive neighborhood maps.</p>
+            </div>
+
+            <div class="feature-box" onclick="navigateTo('roommates')">
+              <div class="feature-icon-box">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <h4>Roommate Match</h4>
+              <p>Find vetted students and professionals who share your budget, work hours, cleanliness, and diet preferences.</p>
+            </div>
+
+            <div class="feature-box" onclick="navigateTo('dashboard')">
+              <div class="feature-icon-box">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+              </div>
+              <h4>Expense Splitter</h4>
+              <p>Track electricity, grocery bills, and Wi-Fi across housemates with automatic settlement calculations.</p>
+            </div>
+
+            <div class="feature-box" onclick="navigateTo('valuation')">
+              <div class="feature-icon-box">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+              </div>
+              <h4>Smart Valuation</h4>
+              <p>Calculate realistic rental rates and property values using verified local registry comp data.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         VIEW 2: PROPERTY DISCOVERY & INTERACTIVE MAP
+         ---------------------------------------------------------------------- -->
+    <section class="view-panel" id="view-discovery">
+      <div class="container discovery-layout">
+        <!-- Filter & Sorting Bar -->
+        <div class="discovery-filter-bar">
+          <div class="filter-chips-row">
+            <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted); margin-right:4px;">Filters:</span>
+            <button class="filter-chip active" onclick="filterByChip('all', this)">All Spaces</button>
+            <button class="filter-chip" onclick="filterByChip('under-15k', this)">Under ₹15k</button>
+            <button class="filter-chip" onclick="filterByChip('15k-25k', this)">₹15k – ₹25k</button>
+            <button class="filter-chip" onclick="filterByChip('above-25k', this)">₹25k+</button>
+            <button class="filter-chip" onclick="filterByChip('furnished', this)">Fully Furnished</button>
+            <button class="filter-chip" onclick="filterByChip('roommates', this)">👥 Roommates Allowed</button>
+          </div>
+
+          <div class="sort-select-wrap">
+            <span>Sort by:</span>
+            <select class="sort-select" onchange="handleSortChange(this.value)">
+              <option value="recommended">Recommended (Transparency)</option>
+              <option value="lowest-rent">Lowest Rent (₹)</option>
+              <option value="lowest-cost">Lowest Total Living Cost</option>
+              <option value="rating">Highest Rating</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Split Screen: Left = Property Cards, Right = Interactive Map -->
+        <div class="discovery-split-grid">
+          <!-- Left: Properties List -->
+          <div class="discovery-properties-list" id="discovery-property-list">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Right: Interactive Map Panel -->
+          <div class="discovery-map-container">
+            <div class="map-header">
+              <div class="map-city-title" id="map-city-header">📍 Verified Spaces in Ahmedabad & Gandhinagar</div>
+              <span class="badge badge-verified">Live Location Pins</span>
+            </div>
+
+            <!-- Custom Vector Interactive Map Canvas -->
+            <div class="map-canvas-wrap" id="discovery-map-canvas">
+              <!-- SVG Map Background Representation -->
+              <svg class="map-svg-grid" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Roads & Geography Mock -->
+                <rect width="500" height="500" fill="#E8EEF5" />
+                <!-- Sabarmati River Mock -->
+                <path d="M 270 0 Q 250 150 260 250 T 230 500" stroke="#BFDBFE" stroke-width="28" fill="none" />
+                <!-- Major Corridors (SG Highway & Ring Road) -->
+                <path d="M 120 0 L 160 500" stroke="#CBD5E1" stroke-width="10" />
+                <path d="M 0 160 L 500 190" stroke="#CBD5E1" stroke-width="8" />
+                <path d="M 0 340 L 500 320" stroke="#CBD5E1" stroke-width="8" />
+                <circle cx="140" cy="180" r="14" fill="#93C5FD" opacity="0.5" />
+                <text x="145" y="165" fill="#475569" font-size="10" font-weight="700">SG Highway</text>
+                <text x="270" y="70" fill="#2563EB" font-size="10" font-weight="700">Gandhinagar GIFT Hub</text>
+                <text x="280" y="270" fill="#475569" font-size="10" font-weight="700">Riverfront</text>
+                <text x="170" y="320" fill="#475569" font-size="10" font-weight="700">Prahlad Nagar</text>
+              </svg>
+
+              <!-- Dynamic Map Pins generated by JS -->
+
+              <!-- Map Legend -->
+              <div class="map-legend-card">
+                <span>🟢 Verified Registry Listing</span>
+                <span>💡 Click pin to view card</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         VIEW 3: ROOMMATE MATCHING ("NESTORA MATCH")
+         ---------------------------------------------------------------------- -->
+    <section class="view-panel" id="view-roommates">
+      <div class="container roommate-section">
+        <div class="roommate-hero-header">
+          <span class="badge badge-primary">Nestora Match</span>
+          <h2>Find roommates you'll actually get along with.</h2>
+          <p style="color:var(--text-secondary); font-size:1.05rem;">
+            Match with students and young professionals by compatibility score, lifestyle routines, study habits, and shared budget.
+          </p>
+
+          <!-- Toggle between Swiper and Grid -->
+          <div class="mode-toggle-pills">
+            <button class="mode-toggle-btn active" id="toggle-swiper-btn" onclick="toggleRoommateView('swiper')">
+              🃏 Swiper Mode
+            </button>
+            <button class="mode-toggle-btn" id="toggle-grid-btn" onclick="toggleRoommateView('grid')">
+              📑 Grid Directory
+            </button>
+          </div>
+        </div>
+
+        <!-- Tinder-Style Deck View -->
+        <div class="swiper-deck-wrapper" id="roommate-swiper-deck">
+          <div id="tinder-card-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Grid View of All Roommates -->
+        <div class="roommate-grid-view" id="roommate-grid-view">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         VIEW 4: TENANT RENT & EXPENSE DASHBOARD
+         ---------------------------------------------------------------------- -->
+    <section class="view-panel" id="view-dashboard">
+      <div class="container dashboard-section">
+        <!-- Personalized Greeting Row -->
+        <div class="dash-greeting-row">
+          <div>
+            <h2 class="dash-greeting-title">Good morning, Het 👋</h2>
+            <div class="dash-property-pill">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+              <span>Palm Grove Luxury Living — Flat 402, SG Highway</span>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-secondary btn-sm" onclick="navigateTo('maintenance')">Report Issue</button>
+            <button class="btn btn-primary btn-sm" onclick="openSplitExpenseModal()">+ Split Expense</button>
+          </div>
+        </div>
+
+        <!-- KPI Summary Cards -->
+        <div class="dash-kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Monthly Rent</div>
+            <div class="kpi-number">₹18,000</div>
+            <div class="kpi-subtext">Due on 5th of every month</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-label">Utilities</div>
+            <div class="kpi-number">₹3,200</div>
+            <div class="kpi-subtext">Electricity, Wi-Fi & Water</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-label">Shared Expenses</div>
+            <div class="kpi-number">₹1,450</div>
+            <div class="kpi-subtext">You owe across flatmates</div>
+          </div>
+
+          <div class="kpi-card kpi-primary-due">
+            <div class="kpi-label">Next Payment</div>
+            <div class="kpi-number">₹18,000</div>
+            <div class="kpi-subtext">Due in 5 days (Oct 5)</div>
+            <button class="btn btn-sm btn-secondary" style="margin-top:10px; width:100%;" onclick="triggerPayRentModal()">
+              Pay via UPI / Card →
+            </button>
+          </div>
+        </div>
+
+        <!-- Two Columns: Spending Analytics & Roommate Shared Expenses -->
+        <div class="dash-columns-grid">
+          <!-- Left: Spending Analytics Graph -->
+          <div class="dash-box">
+            <div class="dash-box-header">
+              <h3>Monthly Living Cost Trajectory</h3>
+              <span class="badge badge-verified">Tracked Automatically</span>
+            </div>
+
+            <!-- SVG Monthly Spending Bar Chart -->
+            <div style="height: 220px; width: 100%; margin-bottom: 20px;">
+              <svg viewBox="0 0 500 200" style="width:100%; height:100%;">
+                <!-- Axis lines -->
+                <line x1="40" y1="170" x2="480" y2="170" stroke="#E2E8F0" stroke-width="1.5" />
+                <line x1="40" y1="120" x2="480" y2="120" stroke="#F1F5F9" stroke-width="1" stroke-dasharray="4" />
+                <line x1="40" y1="70" x2="480" y2="70" stroke="#F1F5F9" stroke-width="1" stroke-dasharray="4" />
+
+                <!-- Bar Groups (May, Jun, Jul, Aug, Sep) -->
+                <!-- May -->
+                <rect x="70" y="55" width="44" height="115" rx="6" fill="#EEF2FF" />
+                <rect x="70" y="80" width="44" height="90" rx="6" fill="#818CF8" />
+                <text x="92" y="190" text-anchor="middle" font-size="11" fill="#64748B" font-weight="600">May</text>
+
+                <!-- Jun -->
+                <rect x="150" y="50" width="44" height="120" rx="6" fill="#EEF2FF" />
+                <rect x="150" y="75" width="44" height="95" rx="6" fill="#818CF8" />
+                <text x="172" y="190" text-anchor="middle" font-size="11" fill="#64748B" font-weight="600">Jun</text>
+
+                <!-- Jul -->
+                <rect x="230" y="40" width="44" height="130" rx="6" fill="#EEF2FF" />
+                <rect x="230" y="65" width="44" height="105" rx="6" fill="#818CF8" />
+                <text x="252" y="190" text-anchor="middle" font-size="11" fill="#64748B" font-weight="600">Jul</text>
+
+                <!-- Aug -->
+                <rect x="310" y="45" width="44" height="125" rx="6" fill="#EEF2FF" />
+                <rect x="310" y="70" width="44" height="100" rx="6" fill="#818CF8" />
+                <text x="332" y="190" text-anchor="middle" font-size="11" fill="#64748B" font-weight="600">Aug</text>
+
+                <!-- Sep (Current) -->
+                <rect x="390" y="35" width="44" height="135" rx="6" fill="#EEF2FF" />
+                <rect x="390" y="60" width="44" height="110" rx="6" fill="#4F46E5" />
+                <text x="412" y="190" text-anchor="middle" font-size="11" fill="#4F46E5" font-weight="800">Sep (Current)</text>
+              </svg>
+            </div>
+
+            <div style="display:flex; justify-content:space-around; font-size:0.825rem; font-weight:600; color:var(--text-secondary); border-top:1px solid var(--border-subtle); padding-top:14px;">
+              <span>🟣 Base Rent: <strong>₹18,000</strong></span>
+              <span>🟠 Electricity: <strong>₹1,500</strong></span>
+              <span>🔵 Wi-Fi: <strong>₹700</strong></span>
+              <span>🟢 Society: <strong>₹1,000</strong></span>
+            </div>
+          </div>
+
+          <!-- Right: Roommate Shared Expense Splitter -->
+          <div class="dash-box">
+            <div class="dash-box-header">
+              <h3>Shared Roommate Expenses</h3>
+              <button class="btn btn-sm btn-outline" onclick="triggerSettleBalances()">Settle All via UPI</button>
+            </div>
+
+            <div class="expense-list" id="dash-expense-list">
+              <!-- Dynamically populated from data.js -->
+            </div>
+
+            <button class="btn btn-secondary btn-sm" style="width:100%; margin-top:16px;" onclick="openSplitExpenseModal()">
+              + Add New Shared Expense
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         VIEW 5: MAINTENANCE MANAGEMENT ("NESTORA CARE")
+         ---------------------------------------------------------------------- -->
+    <section class="view-panel" id="view-maintenance">
+      <div class="container maintenance-section">
+        <div class="maint-header-row">
+          <div>
+            <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -0.03em;">Maintenance & Support</h2>
+            <p style="color:var(--text-secondary); font-size: 0.95rem;">Track real-time technician visits, warranty repairs, and historical resolutions with guaranteed 48hr SLA.</p>
+          </div>
+          <button class="btn btn-primary" onclick="openReportIssueModal()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            + Report an Issue
+          </button>
+        </div>
+
+        <div class="maint-tickets-list" id="maintenance-tickets-container">
+          <!-- Dynamically populated from data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         VIEW 6: SMART PROPERTY VALUATION ("NESTORA VALUEIQ")
+         ---------------------------------------------------------------------- -->
+    <section class="view-panel" id="view-valuation">
+      <div class="container valuation-section">
+        <div class="val-hero-wrap">
+          <span class="badge badge-primary" style="margin-bottom:8px;">Nestora ValueIQ</span>
+          <h2>Know what your property is really worth.</h2>
+          <p style="color:var(--text-secondary); font-size:1.05rem;">
+            Real-time algorithmic valuation based on verified sub-registrar transactions, carpet area comps, and local market demand.
+          </p>
+        </div>
+
+        <div class="val-container-card">
+          <form onsubmit="calculatePropertyValuation(event)">
+            <div class="val-form-grid">
+              <div class="val-form-group">
+                <label>City</label>
+                <select class="val-select" id="val-city-select">
+                  <option value="Ahmedabad" selected>Ahmedabad</option>
+                  <option value="Gandhinagar">Gandhinagar</option>
+                  <option value="Mumbai">Mumbai</option>
+                  <option value="Bengaluru">Bengaluru</option>
+                  <option value="Pune">Pune</option>
+                </select>
+              </div>
+
+              <div class="val-form-group">
+                <label>Locality / Micro-Market</label>
+                <input type="text" class="val-input" id="val-locality-input" placeholder="e.g. Bodakdev, SG Highway" value="Bodakdev" required />
+              </div>
+
+              <div class="val-form-group">
+                <label>Property Type</label>
+                <select class="val-select" id="val-type-select">
+                  <option value="Apartment" selected>Residential Apartment</option>
+                  <option value="Studio">Studio Apartment</option>
+                  <option value="Villa">Villa / Row House</option>
+                  <option value="Commercial">Commercial Office</option>
+                </select>
+              </div>
+
+              <div class="val-form-group">
+                <label>Carpet Area (Sq.Ft)</label>
+                <input type="number" class="val-input" id="val-area-input" value="1200" required />
+              </div>
+
+              <div class="val-form-group">
+                <label>Bedrooms (BHK)</label>
+                <select class="val-select" id="val-bhk-select">
+                  <option value="1">1 BHK</option>
+                  <option value="2" selected>2 BHK</option>
+                  <option value="3">3 BHK</option>
+                  <option value="4">4+ BHK</option>
+                </select>
+              </div>
+
+              <div class="val-form-group">
+                <label>Property Age</label>
+                <select class="val-select" id="val-age-select">
+                  <option value="0-2">0 – 2 Years (Brand New)</option>
+                  <option value="2-5" selected>2 – 5 Years</option>
+                  <option value="5-10">5 – 10 Years</option>
+                  <option value="10+">10+ Years</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="text-align:center;">
+              <button type="submit" class="btn btn-primary btn-lg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                Calculate Estimated Value
+              </button>
+            </div>
+          </form>
+
+          <!-- Dynamic Results Panel -->
+          <div class="val-results-panel" id="val-results-panel">
+            <div class="val-kpi-row">
+              <div class="val-kpi-box">
+                <span class="badge badge-primary">Estimated Monthly Rent</span>
+                <div class="val-kpi-big" id="val-rent-range">₹18,000 – ₹20,000</div>
+                <div style="font-size:0.85rem; color:var(--text-secondary)">Annual Yield: ~3.1% Net</div>
+              </div>
+
+              <div class="val-kpi-box">
+                <span class="badge badge-verified">Estimated Property Value</span>
+                <div class="val-kpi-big" style="color:var(--accent-emerald-dark);" id="val-cap-range">₹72L – ₹82L</div>
+                <div style="font-size:0.85rem; color:var(--text-secondary)">Capital benchmark for 1,200 sq.ft</div>
+              </div>
+            </div>
+
+            <!-- Market Comparison Breakdown Bars -->
+            <div class="market-comp-bars">
+              <h4 style="font-size:1.1rem; font-weight:800; margin-bottom:16px;">Micro-Market Comparison</h4>
+
+              <div class="comp-bar-item">
+                <div class="comp-label-val">
+                  <span>Your Property (Estimated)</span>
+                  <span id="val-comp-your" style="color:var(--primary); font-weight:800;">₹19,000/mo</span>
+                </div>
+                <div class="comp-track">
+                  <div class="comp-fill your-prop" style="width: 82%;"></div>
+                </div>
+              </div>
+
+              <div class="comp-bar-item">
+                <div class="comp-label-val">
+                  <span>Locality Area Average</span>
+                  <span id="val-comp-area" style="color:var(--text-muted);">₹18,200/mo</span>
+                </div>
+                <div class="comp-track">
+                  <div class="comp-fill area-avg" style="width: 76%;"></div>
+                </div>
+              </div>
+
+              <div class="comp-bar-item">
+                <div class="comp-label-val">
+                  <span>Similar Verified Comps</span>
+                  <span id="val-comp-similar" style="color:var(--accent-emerald-dark);">₹18,700/mo</span>
+                </div>
+                <div class="comp-track">
+                  <div class="comp-fill similar-comps" style="width: 79%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Disclaimer Notice -->
+            <div style="padding:14px 18px; background:var(--accent-amber-light); border:1px solid rgba(245, 158, 11, 0.3); border-radius:var(--radius-md); font-size:0.825rem; color:#92400E; display:flex; align-items:center; gap:10px;">
+              <span style="font-size:1.2rem;">ℹ️</span>
+              <span><strong>Transparent Disclaimer:</strong> These figures are data-driven algorithmic estimates derived from verified micro-market transactions and recent leases. They serve as informational guidelines, not statutory appraisals.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         VIEW 7: RENTAL AGREEMENT PAGE ("PLAIN-ENGLISH LEASE")
+         ---------------------------------------------------------------------- -->
+    <section class="view-panel" id="view-agreement">
+      <div class="container agreement-section">
+        <div class="agreement-hero">
+          <span class="badge badge-primary">Smart Digital Lease</span>
+          <h2>Understand your agreement before you sign.</h2>
+          <p style="color:var(--text-secondary); font-size:1.05rem;">
+            No hidden clauses. Every section translated side-by-side into simple, transparent English vetted by legal experts.
+          </p>
+
+          <!-- Top Summary Quick Cards -->
+          <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:12px; margin-top:24px; text-align:left;">
+            <div style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+              <div style="font-size:0.7rem; color:var(--text-muted); font-weight:800;">MONTHLY RENT</div>
+              <div style="font-size:1.1rem; font-weight:800; color:var(--primary);">₹18,000</div>
+            </div>
+            <div style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+              <div style="font-size:0.7rem; color:var(--text-muted); font-weight:800;">SECURITY DEPOSIT</div>
+              <div style="font-size:1.1rem; font-weight:800; color:var(--text-primary);">₹36,000</div>
+            </div>
+            <div style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+              <div style="font-size:0.7rem; color:var(--text-muted); font-weight:800;">NOTICE PERIOD</div>
+              <div style="font-size:1.1rem; font-weight:800; color:var(--text-primary);">2 Months</div>
+            </div>
+            <div style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+              <div style="font-size:0.7rem; color:var(--text-muted); font-weight:800;">LOCK-IN PERIOD</div>
+              <div style="font-size:1.1rem; font-weight:800; color:var(--text-primary);">6 Months</div>
+            </div>
+            <div style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+              <div style="font-size:0.7rem; color:var(--text-muted); font-weight:800;">MAINTENANCE</div>
+              <div style="font-size:1.1rem; font-weight:800; color:var(--accent-emerald-dark);">Owner Paid</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clauses Container -->
+        <div class="clauses-stack" id="agreement-clauses-container">
+          <!-- Dynamically populated from data.js -->
+        </div>
+
+        <!-- Signing Actions -->
+        <div style="display:flex; justify-content:center; gap:16px; margin-top:36px;">
+          <button class="btn btn-secondary btn-lg" onclick="triggerDownloadAgreement()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download Agreement (PDF)
+          </button>
+          <button class="btn btn-outline btn-lg" onclick="triggerClarificationModal()">
+            Request Landlord Clarification
+          </button>
+          <button class="btn btn-primary btn-lg" onclick="triggerSignAgreement()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Aadhaar eSign & Approve
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         VIEW 8: OWNER / LANDLORD DASHBOARD ("NESTORA HOST")
+         ---------------------------------------------------------------------- -->
+    <section class="view-panel" id="view-owner">
+      <div class="container owner-layout">
+        <div class="owner-container">
+          <!-- Sidebar -->
+          <aside class="owner-sidebar">
+            <ul class="owner-menu">
+              <li class="owner-menu-item active">📊 Dashboard</li>
+              <li class="owner-menu-item">🏢 Properties (8)</li>
+              <li class="owner-menu-item">📝 Applications (5)</li>
+              <li class="owner-menu-item">👥 Tenants</li>
+              <li class="owner-menu-item">🔧 Maintenance (3)</li>
+              <li class="owner-menu-item">💳 Revenue & Payouts</li>
+              <li class="owner-menu-item">⚙️ Settings</li>
+            </ul>
+          </aside>
+
+          <!-- Main Content Area -->
+          <div class="owner-content-area">
+            <div class="owner-header-row">
+              <div>
+                <h2>Host Portfolio Overview</h2>
+                <p style="color:var(--text-secondary); font-size:0.9rem;">Manage units across Ahmedabad and Gandhinagar with automated rent collection.</p>
+              </div>
+              <button class="btn btn-primary" onclick="openAddPropertyModal()">
+                + Add Property
+              </button>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="dash-kpi-grid">
+              <div class="kpi-card">
+                <div class="kpi-label">Active Properties</div>
+                <div class="kpi-number">8</div>
+                <div class="kpi-subtext">All verified by Nestora</div>
+              </div>
+
+              <div class="kpi-card">
+                <div class="kpi-label">Occupied Units</div>
+                <div class="kpi-number">7</div>
+                <div class="kpi-subtext">87.5% Occupancy Rate</div>
+              </div>
+
+              <div class="kpi-card">
+                <div class="kpi-label">Monthly Gross Revenue</div>
+                <div class="kpi-number">₹1.42L</div>
+                <div class="kpi-subtext">94% On-time UPI collections</div>
+              </div>
+
+              <div class="kpi-card">
+                <div class="kpi-label">Pending Maintenance</div>
+                <div class="kpi-number" style="color:var(--accent-amber);">3</div>
+                <div class="kpi-subtext">Assigned to certified pros</div>
+              </div>
+            </div>
+
+            <!-- Tenant Management Table -->
+            <div class="owner-table-card">
+              <div style="padding:18px 20px; border-bottom:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="font-size:1.15rem; font-weight:800;">Tenant & Lease Status</h3>
+                <span class="badge badge-verified">Direct Escrow Active</span>
+              </div>
+              <div class="table-responsive">
+                <table class="nestora-table">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Tenant</th>
+                      <th>Monthly Rent</th>
+                      <th>Payment Status</th>
+                      <th>Maintenance</th>
+                      <th>Lease Expiry</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="owner-tenant-table-body">
+                    <!-- Dynamically populated from data.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       MODAL 1: PROPERTY DETAILS & COST BREAKDOWN MODAL
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="details-modal">
+    <div class="details-modal-container">
+      <button class="modal-close-btn" onclick="closePropertyDetailsModal()">✕</button>
+
+      <!-- Gallery Grid -->
+      <div class="details-gallery" id="modal-gallery-container">
+        <!-- Dynamically populated -->
+      </div>
+
+      <!-- Header Row -->
+      <div class="details-header-row">
+        <div class="details-title-wrap">
+          <span class="badge badge-verified" style="margin-bottom:6px;">✓ Verified Space & Title</span>
+          <h2 id="modal-prop-title">Modern 2BHK near Nirma University</h2>
+          <p class="details-subtitle" id="modal-prop-locality">SG Highway, Ahmedabad • 0.8 km to Nirma</p>
+        </div>
+        <div class="details-pricing-badge">
+          <div class="details-rent-large" id="modal-prop-rent">₹18,000/mo</div>
+          <div class="details-deposit-sub" id="modal-prop-deposit">Deposit: ₹36,000</div>
+        </div>
+      </div>
+
+      <!-- Two-Column Details Body -->
+      <div class="details-body-grid">
+        <!-- Left Column: Cost Breakdown & Simulator -->
+        <div>
+          <!-- Cost Breakdown Card -->
+          <div class="cost-breakdown-card">
+            <div class="cost-card-header">
+              <h3>Transparent Cost Breakdown</h3>
+              <span class="badge badge-verified">Zero Hidden Fees</span>
+            </div>
+
+            <p style="font-size:0.875rem; color:var(--text-secondary); margin-bottom:16px;">
+              Here is exactly where every rupee goes every month:
+            </p>
+
+            <!-- Visual Color Bar Chart -->
+            <div class="cost-chart-visual" id="cost-chart-visual">
+              <!-- Dynamically populated segments -->
+            </div>
+
+            <!-- Itemized List -->
+            <div class="cost-breakdown-list" id="cost-breakdown-items">
+              <!-- Dynamically populated items -->
+            </div>
+
+            <!-- Total Estimated Living Cost -->
+            <div class="cost-total-row">
+              <div>
+                <strong style="font-size:1.05rem;">Estimated Monthly Living Cost:</strong>
+                <div style="font-size:0.75rem; color:var(--text-muted);">Includes base rent + average utilities</div>
+              </div>
+              <div class="cost-total-val" id="cost-total-amount">₹22,500</div>
+            </div>
+
+            <!-- Interactive AC Simulator -->
+            <div class="cost-simulator-box">
+              <div class="simulator-label">
+                <span>Interactive AC Usage Simulator</span>
+                <span id="simulator-ac-hours" style="color:var(--primary);">6 hrs/day</span>
+              </div>
+              <input type="range" class="simulator-range" min="0" max="16" value="6" oninput="handleSimulatorChange(this.value)" />
+              <div style="font-size:0.725rem; color:var(--text-muted); margin-top:4px;">
+                Slide to test power consumption costs with AC on Ahmedabad Torrent Power slab rates.
+              </div>
+            </div>
+          </div>
+
+          <!-- Description & Amenities -->
+          <div style="background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); padding:24px; margin-bottom:24px;">
+            <h4 style="font-size:1.15rem; font-weight:800; margin-bottom:10px;">About This Space</h4>
+            <p id="modal-prop-description" style="font-size:0.925rem; color:var(--text-secondary); line-height:1.6; margin-bottom:20px;">
+              Sunlit modern apartment...
+            </p>
+
+            <h4 style="font-size:1.15rem; font-weight:800; margin-bottom:12px;">Verified Amenities</h4>
+            <div id="modal-amenities-list" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:10px;">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Transparency Scorecard & Simplified Agreement -->
+        <div>
+          <!-- Scorecard -->
+          <div class="transparency-scorecard" id="modal-transparency-card">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Simplified Agreement Terms Box -->
+          <div class="agreement-preview-box" id="modal-agreement-preview">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Dock -->
+      <div class="action-dock">
+        <button class="btn btn-secondary" onclick="triggerContactOwner()">Contact Owner</button>
+        <button class="btn btn-outline" onclick="triggerScheduleVisit()">Schedule Visit</button>
+        <button class="btn btn-primary" style="flex:1;" onclick="triggerApplyNow()">Apply Now (Zero Brokerage)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: ROOMMATE PROFILE MODAL
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="roommate-modal">
+    <div class="details-modal-container" style="max-width: 650px;">
+      <button class="modal-close-btn" onclick="closeRoommateModal()">✕</button>
+      <div class="roommate-profile-modal-body" id="roommate-modal-body">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 3: SPLIT EXPENSE MODAL
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="split-expense-modal">
+    <div class="details-modal-container" style="max-width: 500px;">
+      <button class="modal-close-btn" onclick="closeSplitExpenseModal()">✕</button>
+      <div style="padding: 28px;">
+        <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 6px;">Split Shared Expense</h3>
+        <p style="color:var(--text-secondary); font-size:0.875rem; margin-bottom: 20px;">
+          Log a bill and automatically calculate roommate shares.
+        </p>
+
+        <form onsubmit="submitNewSplitExpense(event)">
+          <div class="val-form-group" style="margin-bottom:16px;">
+            <label>Expense Title</label>
+            <input type="text" class="val-input" id="split-title-input" placeholder="e.g. Jio Fiber 300 Mbps bill" required />
+          </div>
+
+          <div class="val-form-group" style="margin-bottom:16px;">
+            <label>Total Amount (₹)</label>
+            <input type="number" class="val-input" id="split-amount-input" placeholder="e.g. 1200" required />
+          </div>
+
+          <div class="val-form-group" style="margin-bottom:16px;">
+            <label>Category</label>
+            <select class="val-select" id="split-category-select">
+              <option value="Electricity">Electricity</option>
+              <option value="Internet" selected>High-Speed Wi-Fi</option>
+              <option value="Groceries">Groceries & Essentials</option>
+              <option value="Water">Drinking Water Cans</option>
+              <option value="Maid">Maid & Cook Charges</option>
+            </select>
+          </div>
+
+          <div class="val-form-group" style="margin-bottom:24px;">
+            <label>Split With Roommate</label>
+            <select class="val-select" id="split-roommate-select">
+              <option value="Rahul Verma">Rahul Verma (50/50 Equal Split)</option>
+              <option value="Aditya Joshi">Aditya Joshi (50/50 Equal Split)</option>
+            </select>
+          </div>
+
+          <div style="display:flex; gap:12px;">
+            <button type="submit" class="btn btn-primary" style="flex:1;">Save & Notify Roommates</button>
+            <button type="button" class="btn btn-secondary" onclick="closeSplitExpenseModal()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 4: REPORT MAINTENANCE ISSUE MODAL
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="report-issue-modal">
+    <div class="details-modal-container" style="max-width: 540px;">
+      <button class="modal-close-btn" onclick="closeReportIssueModal()">✕</button>
+      <div style="padding: 28px;">
+        <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 6px;">Report Maintenance Issue</h3>
+        <p style="color:var(--text-secondary); font-size:0.875rem; margin-bottom: 20px;">
+          Direct connection to certified local technicians with 48h resolution SLA.
+        </p>
+
+        <form onsubmit="submitNewMaintenanceIssue(event)">
+          <div class="val-form-group" style="margin-bottom:14px;">
+            <label>Issue Category</label>
+            <select class="val-select" id="issue-category-select">
+              <option value="Plumbing" selected>Plumbing (Taps, Geyser, Drain)</option>
+              <option value="Electrical">Electrical (Lights, Fan, Switchboard)</option>
+              <option value="Appliance">Appliance (AC, Refrigerator, RO)</option>
+              <option value="Carpentry">Carpentry (Doors, Locks, Wardrobe)</option>
+              <option value="Structural">Structural (Seepage, Paint, Tiles)</option>
+            </select>
+          </div>
+
+          <div class="val-form-group" style="margin-bottom:14px;">
+            <label>Issue Title</label>
+            <input type="text" class="val-input" id="issue-title-input" placeholder="e.g. Geyser tripping circuit breaker" required />
+          </div>
+
+          <div class="val-form-group" style="margin-bottom:14px;">
+            <label>Location in Apartment</label>
+            <input type="text" class="val-input" id="issue-location-input" placeholder="e.g. Common Bathroom" value="Master Bathroom" required />
+          </div>
+
+          <div class="val-form-group" style="margin-bottom:14px;">
+            <label>Detailed Description</label>
+            <textarea class="val-input" id="issue-desc-input" rows="3" placeholder="Explain what happened and what time you prefer the visit..." required></textarea>
+          </div>
+
+          <div class="val-form-group" style="margin-bottom:20px;">
+            <label>Urgency Level</label>
+            <select class="val-select" id="issue-urgency-select">
+              <option value="Medium">🟡 Medium (Within 24–48 hours)</option>
+              <option value="High">🔴 High (Emergency plumbing or power loss)</option>
+              <option value="Low">🟢 Low (Routine servicing)</option>
+            </select>
+          </div>
+
+          <div style="display:flex; gap:12px;">
+            <button type="submit" class="btn btn-primary" style="flex:1;">Submit Ticket</button>
+            <button type="button" class="btn btn-secondary" onclick="closeReportIssueModal()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 5: ADD PROPERTY (OWNER) MODAL
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="add-property-modal">
+    <div class="details-modal-container" style="max-width: 520px;">
+      <button class="modal-close-btn" onclick="closeAddPropertyModal()">✕</button>
+      <div style="padding: 28px;">
+        <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 6px;">List a New Space</h3>
+        <p style="color:var(--text-secondary); font-size:0.875rem; margin-bottom: 20px;">
+          List transparently on Nestora with zero brokerage and verified tenant screening.
+        </p>
+
+        <form onsubmit="submitNewOwnerProperty(event)">
+          <div class="val-form-group" style="margin-bottom:14px;">
+            <label>Property Name / Tower</label>
+            <input type="text" class="val-input" id="prop-title-input" placeholder="e.g. Shaligram Prime — 3BHK" required />
+          </div>
+
+          <div class="val-form-group" style="margin-bottom:14px;">
+            <label>Locality & City</label>
+            <input type="text" class="val-input" id="prop-locality-input" placeholder="e.g. South Bopal, Ahmedabad" value="SG Highway, Ahmedabad" required />
+          </div>
+
+          <div class="val-form-group" style="margin-bottom:14px;">
+            <label>Monthly Rent (₹)</label>
+            <input type="number" class="val-input" id="prop-rent-input" placeholder="e.g. 22000" required />
+          </div>
+
+          <div style="display:flex; gap:12px; margin-top:24px;">
+            <button type="submit" class="btn btn-primary" style="flex:1;">List Property</button>
+            <button type="button" class="btn btn-secondary" onclick="closeAddPropertyModal()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 6: USER PROFILE & KYC MODAL
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="profile-modal">
+    <div class="details-modal-container" style="max-width: 580px;">
+      <button class="modal-close-btn" onclick="closeProfileModal()">✕</button>
+      <div class="profile-tab-content">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80" alt="Het Darji" style="width:72px; height:72px; border-radius:50%; object-fit:cover; border:2px solid var(--primary);" />
+          <div>
+            <h3 style="font-size:1.4rem; font-weight:800;">Het Darji</h3>
+            <p style="font-size:0.875rem; color:var(--text-secondary);">Student & Tech Enthusiast • Ahmedabad</p>
+            <span class="badge badge-verified" style="margin-top:4px;">100% Trust Score</span>
+          </div>
+        </div>
+
+        <div class="verification-strip">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--accent-emerald-dark);"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          <div>
+            <div style="font-weight:700; font-size:0.9rem; color:#14532D;">DigiLocker Identity Verified</div>
+            <div style="font-size:0.775rem; color:#15803D;">Aadhaar ending in •••• 4892 linked with instant eSign approval.</div>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-sm); font-size:0.875rem;">
+            <span style="color:var(--text-muted); font-weight:600;">Phone Verification:</span>
+            <span style="font-weight:700; color:var(--accent-emerald-dark);">✓ +91 98765 43210</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-sm); font-size:0.875rem;">
+            <span style="color:var(--text-muted); font-weight:600;">Email Verification:</span>
+            <span style="font-weight:700; color:var(--accent-emerald-dark);">✓ het.darji@example.com</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-sm); font-size:0.875rem;">
+            <span style="color:var(--text-muted); font-weight:600;">Current Active Lease:</span>
+            <span style="font-weight:700; color:var(--primary);">Flat 402, Palm Grove (11M)</span>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;" onclick="closeProfileModal(); showToast('Profile settings up to date');">
+          Save Preferences
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       NOTIFICATION DRAWER (SLIDE-OVER)
+       ========================================================================== -->
+  <div class="notif-drawer-backdrop" id="notif-drawer-modal" onclick="if(event.target === this) toggleNotificationDrawer(false)">
+    <div class="notif-drawer">
+      <div class="notif-drawer-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:1.2rem;">🔔</span>
+          <h3>Notifications</h3>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button class="btn btn-sm btn-ghost" onclick="markAllNotificationsRead()">Mark read</button>
+          <button class="btn btn-icon btn-ghost" onclick="toggleNotificationDrawer(false)">✕</button>
+        </div>
+      </div>
+
+      <div class="notif-items-list" id="notif-drawer-items">
+        <!-- Dynamically populated from data.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MOBILE BOTTOM NAVIGATION BAR
+       ========================================================================== -->
+  <nav class="mobile-bottom-bar">
+    <button class="bottom-tab active" data-target="landing">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+      <span>Home</span>
+    </button>
+    <button class="bottom-tab" data-target="discovery">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <span>Explore</span>
+    </button>
+    <button class="bottom-tab" data-target="roommates">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+      <span>Roommates</span>
+    </button>
+    <button class="bottom-tab" data-target="dashboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+      <span>Expenses</span>
+    </button>
+    <button class="bottom-tab" data-target="profile" onclick="openProfileModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <span>Profile</span>
+    </button>
+  </nav>
+
+  <!-- JavaScript Modules -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
