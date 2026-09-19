@@ -1,22 +1,26 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="author" content="Nestora PropTech" />
-  <meta name="description" content="Nestora is a next-generation PropTech platform helping young adults and first-time renters find, compare, lease, share, and manage residential and commercial spaces with radical cost transparency." />
+  <meta name="author" content="Nestera PropTech" />
+  <meta name="description"
+    content="Nestera is a next-generation PropTech platform helping young adults and first-time renters find, compare, lease, share, and manage residential and commercial spaces with radical cost transparency." />
   <meta name="theme-color" content="#4F46E5" />
-  <title>Nestora — Next-Gen PropTech & Transparent Living Platform</title>
+  <title>Nestera — Next-Gen PropTech &amp; Transparent Living Platform</title>
 
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="main.css" />
 </head>
+
 <body>
 
   <!-- ==========================================================================
@@ -27,14 +31,14 @@
       <!-- Brand Logo -->
       <div class="brand" onclick="navigateTo('landing')">
         <div class="brand-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
           </svg>
         </div>
         <div class="brand-name">
-          Nestora
-          <span class="brand-tag">Transparent</span>
+          Nestera
         </div>
       </div>
 
@@ -47,14 +51,22 @@
         <li><a class="nav-link" data-target="agreement">Agreement</a></li>
         <li><a class="nav-link" data-target="dashboard">Tenant Hub</a></li>
         <li><a class="nav-link" data-target="maintenance">Maintenance</a></li>
+        <li><a class="nav-link" onclick="openProofVaultModal()" title="Move-in/Move-out condition evidence"
+            style="cursor:pointer;">Proof Vault</a></li>
+        <li><a class="nav-link" onclick="openRoommateContractModal()" title="Cohabitation house constitution"
+            style="cursor:pointer;">House Constitution</a></li>
       </ul>
 
       <!-- Action Items & User Profile -->
       <div class="nav-actions">
-        <!-- Role Toggle (Tenant / Owner) -->
-        <div class="role-badge-toggle" title="Switch between Tenant and Landlord mode">
-          <button class="role-btn active" id="role-btn-tenant">Tenant</button>
-          <button class="role-btn" id="role-btn-owner">Owner</button>
+        <!-- Permanent Role Badge (Permanent role, no arbitrary switching) -->
+        <div class="role-badge-toggle" id="nav-role-badge-container"
+          style="display:flex; align-items:center; gap:6px; background:#EEF2FF; border:1px solid var(--primary-200); padding:4px 10px; border-radius:20px;"
+          title="Permanent role locked via Supabase Auth">
+          <span id="nav-role-label" style="font-size:0.78rem; font-weight:800; color:var(--primary);">🏠 Tenant</span>
+          <span
+            style="font-size:0.65rem; background:#FFFFFF; padding:1px 5px; border-radius:4px; font-weight:700; color:var(--text-muted); border:1px solid var(--border-subtle);">🔒
+            Fixed</span>
         </div>
 
         <!-- Notification Bell with Dynamic Counter -->
@@ -67,9 +79,9 @@
         </button>
 
         <!-- User Quick Profile Pill -->
-        <div class="user-nav-profile" onclick="openProfileModal()" title="View account & verification">
-          <img src="—Pngtree—man avatar image for profile_13001882.png"Het Darji" class="user-avatar" />
-          <span class="user-nav-name">Het Darji</span>
+        <div class="user-nav-profile" id="user-nav-profile-pill" onclick="openProfileModal()" title="View account & verification">
+          <img src="images/avatars/avatar-neutral.svg" alt="Resident" class="user-avatar" id="user-nav-avatar" />
+          <span class="user-nav-name" id="user-nav-display-name">Resident</span>
           <span class="badge badge-verified" style="padding: 2px 6px; font-size: 0.7rem;">✓ Verified</span>
         </div>
       </div>
@@ -97,8 +109,21 @@
             <span class="text-gradient">and your budget.</span>
           </h1>
           <p class="hero-subtitle">
-            Discover verified spaces, compatible roommates, transparent costs and smarter rental management — all in one place.
+            Discover verified spaces, compatible roommates, transparent costs and smarter rental management — all in one
+            place.
           </p>
+
+          <!-- Role Selection / Getting Started Action Buttons -->
+          <div style="display:flex; gap:12px; margin-top:20px; margin-bottom:28px; flex-wrap:wrap;">
+            <button class="btn btn-primary btn-lg" onclick="openRoleSelectModal()"
+              style="border-radius:30px; font-weight:800; box-shadow:0 8px 20px rgba(79, 70, 229, 0.35); padding:14px 30px;">
+              🚀 Get Started — Choose Your Role
+            </button>
+            <button class="btn btn-secondary btn-lg" onclick="navigateTo('discovery')"
+              style="border-radius:30px; font-weight:700; padding:14px 24px;">
+              Browse Nearest Hostels →
+            </button>
+          </div>
 
           <!-- Large Search Component -->
           <div class="hero-search-box">
@@ -107,14 +132,8 @@
               <div class="search-field">
                 <label class="search-label">Location</label>
                 <select class="search-select" id="hero-city-select">
-                  <option value="Ahmedabad" selected>Ahmedabad (SG Highway, Bodakdev)</option>
-                  <option value="Gandhinagar">Gandhinagar (GIFT City, PDPU)</option>
-                  <option value="Vadodara">Vadodara</option>
-                  <option value="Surat">Surat</option>
-                  <option value="Mumbai">Mumbai (Bandra, Andheri)</option>
-                  <option value="Bengaluru">Bengaluru (HSR, Koramangala)</option>
-                  <option value="Pune">Pune (Kothrud, Viman Nagar)</option>
-                  <option value="Delhi">Delhi NCR (Gurugram, Noida)</option>
+                  <option value="Ahmedabad" selected>Ahmedabad</option>
+                  <option value="Gandhinagar">Gandhinagar</option>
                 </select>
               </div>
 
@@ -148,11 +167,11 @@
               <div class="search-field">
                 <label class="search-label">Move-in Date</label>
                 <select class="search-select" id="hero-time-select">
-                    <option value="Immediately" selected>Immediatly</option>
-                    <option value="Tommorow">Tommorow</option>
-                    <option value="Next Week">Next Week</option>
-                    <option value="Next Month">Next Month</option>
-                    <option value="2 Months Later">2 Months Later</option>
+                  <option value="Immediately" selected>Immediatly</option>
+                  <option value="Tommorow">Tommorow</option>
+                  <option value="Next Week">Next Week</option>
+                  <option value="Next Month">Next Month</option>
+                  <option value="2 Months Later">2 Months Later</option>
                 </select>
               </div>
 
@@ -172,19 +191,34 @@
           <!-- Trust Badges Bar -->
           <div class="trust-bar">
             <div class="trust-item">
-              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
               <span>10,000+ Verified Spaces</span>
             </div>
             <div class="trust-item">
-              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 6v6l4 2"></path>
+              </svg>
               <span>Transparent Pricing</span>
             </div>
             <div class="trust-item">
-              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
               <span>Secure Agreements</span>
-            </div>  
+            </div>
             <div class="trust-item">
-              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
               <span>Smart Maintenance</span>
             </div>
           </div>
@@ -201,8 +235,9 @@
         <div class="container">
           <div class="section-header">
             <span class="section-tag">Radical Transparency</span>
-            <h2 class="section-heading">Why Young Adults Choose Nestora</h2>
-            <p class="section-subheading">We eliminate hidden costs, confusing legal jargon, and roommate conflicts so you can lease with 100% confidence.</p>
+            <h2 class="section-heading">Why Young Adults Choose Nestera</h2>
+            <p class="section-subheading">We eliminate hidden costs, confusing legal jargon, and roommate conflicts so
+              you can lease with 100% confidence.</p>
           </div>
 
           <div class="comparison-grid">
@@ -212,50 +247,60 @@
               <ul class="compare-list">
                 <li class="compare-item">
                   <span class="compare-icon-cross">✕</span>
-                  <span><strong>Hidden Monthly Charges:</strong> Surprise electricity surcharges, unexpected society fees, and unlisted parking costs.</span>
+                  <span><strong>Hidden Monthly Charges:</strong> Surprise electricity surcharges, unexpected society
+                    fees, and unlisted parking costs.</span>
                 </li>
                 <li class="compare-item">
                   <span class="compare-icon-cross">✕</span>
-                  <span><strong>Arbitrary Deposit Deductions:</strong> Landlords holding onto 2–3 months of deposit for arbitrary wear-and-tear.</span>
+                  <span><strong>Arbitrary Deposit Deductions:</strong> Landlords holding onto 2–3 months of deposit for
+                    arbitrary wear-and-tear.</span>
                 </li>
                 <li class="compare-item">
                   <span class="compare-icon-cross">✕</span>
-                  <span><strong>Complicated Legal Contracts:</strong> 25-page legal agreements full of unfair indemnity and termination clauses.</span>
+                  <span><strong>Complicated Legal Contracts:</strong> 25-page legal agreements full of unfair indemnity
+                    and termination clauses.</span>
                 </li>
                 <li class="compare-item">
                   <span class="compare-icon-cross">✕</span>
-                  <span><strong>Roommate Friction:</strong> No screening for sleep schedules, cleanliness, food habits, or bill splitting.</span>
+                  <span><strong>Roommate Friction:</strong> No screening for sleep schedules, cleanliness, food habits,
+                    or bill splitting.</span>
                 </li>
                 <li class="compare-item">
                   <span class="compare-icon-cross">✕</span>
-                  <span><strong>Delayed Repairs:</strong> Ghosting landlords who take weeks to fix broken geysers or leaking taps.</span>
+                  <span><strong>Delayed Repairs:</strong> Ghosting landlords who take weeks to fix broken geysers or
+                    leaking taps.</span>
                 </li>
               </ul>
             </div>
 
-            <!-- Nestora Way Card -->
+            <!-- Nestera Way Card -->
             <div class="compare-card nestora">
-              <span class="compare-badge badge-verified">The Nestora Way</span>
+              <span class="compare-badge badge-verified">The Nestera Way</span>
               <ul class="compare-list">
                 <li class="compare-item">
                   <span class="compare-icon-check">✓</span>
-                  <span><strong>All-Inclusive Living Cost Breakdown:</strong> Itemized estimates for rent, power, Wi-Fi, and society maintenance before you book.</span>
+                  <span><strong>All-Inclusive Living Cost Breakdown:</strong> Itemized estimates for rent, power, Wi-Fi,
+                    and society maintenance before you book.</span>
                 </li>
                 <li class="compare-item">
                   <span class="compare-icon-check">✓</span>
-                  <span><strong>Escrow Deposit Protection:</strong> Guaranteed 100% deposit refund released within 7 working days of fair inspection.</span>
+                  <span><strong>Escrow Deposit Protection:</strong> Guaranteed 100% deposit refund released within 7
+                    working days of fair inspection.</span>
                 </li>
                 <li class="compare-item">
                   <span class="compare-icon-check">✓</span>
-                  <span><strong>Plain-English Agreements:</strong> 5 simplified clauses you can actually understand and sign via Aadhaar OTP.</span>
+                  <span><strong>Plain-English Agreements:</strong> 5 simplified clauses you can actually understand and
+                    sign via Aadhaar OTP.</span>
                 </li>
                 <li class="compare-item">
                   <span class="compare-icon-check">✓</span>
-                  <span><strong>87%+ Roommate Compatibility:</strong> Algorithmic matching based on study habits, hygiene, and spending styles.</span>
+                  <span><strong>87%+ Roommate Compatibility:</strong> Algorithmic matching based on study habits,
+                    hygiene, and spending styles.</span>
                 </li>
                 <li class="compare-item">
                   <span class="compare-icon-check">✓</span>
-                  <span><strong>Tracked Maintenance SLAs:</strong> 24–48 hour technician dispatch with live progress updates right on your phone.</span>
+                  <span><strong>Tracked Maintenance SLAs:</strong> 24–48 hour technician dispatch with live progress
+                    updates right on your phone.</span>
                 </li>
               </ul>
             </div>
@@ -269,37 +314,56 @@
           <div class="section-header">
             <span class="section-tag">End-to-End PropTech</span>
             <h2 class="section-heading">Everything You Need To Live Well</h2>
-            <p class="section-subheading">A single cohesive platform designed around young renters and modern property owners.</p>
+            <p class="section-subheading">A single cohesive platform designed around young renters and modern property
+              owners.</p>
           </div>
 
           <div class="features-grid">
             <div class="feature-box" onclick="navigateTo('discovery')">
               <div class="feature-icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
               </div>
               <h4>Verified Discovery</h4>
-              <p>Explore high-res photo galleries, 3D walkthroughs, verified landlords, and interactive neighborhood maps.</p>
+              <p>Explore high-res photo galleries, 3D walkthroughs, verified landlords, and interactive neighborhood
+                maps.</p>
             </div>
 
             <div class="feature-box" onclick="navigateTo('roommates')">
               <div class="feature-icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
               </div>
               <h4>Roommate Match</h4>
-              <p>Find vetted students and professionals who share your budget, work hours, cleanliness, and diet preferences.</p>
+              <p>Find vetted students and professionals who share your budget, work hours, cleanliness, and diet
+                preferences.</p>
             </div>
 
             <div class="feature-box" onclick="navigateTo('dashboard')">
               <div class="feature-icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                  <line x1="2" y1="10" x2="22" y2="10"></line>
+                </svg>
               </div>
               <h4>Expense Splitter</h4>
-              <p>Track electricity, grocery bills, and Wi-Fi across housemates with automatic settlement calculations.</p>
+              <p>Track electricity, grocery bills, and Wi-Fi across housemates with automatic settlement calculations.
+              </p>
             </div>
 
             <div class="feature-box" onclick="navigateTo('valuation')">
               <div class="feature-icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="20" x2="18" y2="10"></line>
+                  <line x1="12" y1="20" x2="12" y2="4"></line>
+                  <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
               </div>
               <h4>Smart Valuation</h4>
               <p>Calculate realistic rental rates and property values using verified local registry comp data.</p>
@@ -314,6 +378,35 @@
          ---------------------------------------------------------------------- -->
     <section class="view-panel" id="view-discovery">
       <div class="container discovery-layout">
+        <!-- Campus & Short-Term Stay Filter Strip (addme.md Specification) -->
+        <div
+          style="background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:12px 18px; margin-bottom:14px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; box-shadow:var(--shadow-sm);">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:0.85rem; font-weight:800; color:var(--primary);">🎓 Nearest Campus:</span>
+            <select id="discovery-campus-select" class="val-select"
+              style="width:auto; padding:6px 12px; font-size:0.85rem; font-weight:700; color:var(--primary-hover);"
+              onchange="handleCampusFilterChange(this.value)">
+              <option value="all">All Locations (Citywide)</option>
+              <option value="Nirma University">Nirma University (SG Highway)</option>
+              <option value="CEPT">CEPT University (Navrangpura)</option>
+              <option value="PDPU">PDPU / PDEU (Gandhinagar)</option>
+              <option value="IIM Ahmedabad">IIM Ahmedabad (Vastrapur)</option>
+              <option value="GIFT City">GIFT City IT Corridor</option>
+            </select>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:0.85rem; font-weight:700; color:var(--text-secondary);">⏳ Short-Term Window:</span>
+            <div style="display:inline-flex; gap:6px; flex-wrap:wrap;">
+              <button class="filter-chip active" id="pill-dur-all" onclick="filterByDuration('all', this)">All
+                Durations</button>
+              <button class="filter-chip" id="pill-dur-2" onclick="filterByDuration('2', this)">2 Months Stay</button>
+              <button class="filter-chip" id="pill-dur-3" onclick="filterByDuration('3', this)">3 Months Stay</button>
+              <button class="filter-chip" id="pill-dur-4" onclick="filterByDuration('4', this)">4 Months Stay</button>
+            </div>
+          </div>
+        </div>
+
         <!-- Filter & Sorting Bar -->
         <div class="discovery-filter-bar">
           <div class="filter-chips-row">
@@ -330,6 +423,7 @@
             <span>Sort by:</span>
             <select class="sort-select" onchange="handleSortChange(this.value)">
               <option value="recommended">Recommended (Transparency)</option>
+              <option value="true-cost">True Living Cost: Low to High</option>
               <option value="lowest-rent">Lowest Rent (₹)</option>
               <option value="lowest-cost">Lowest Total Living Cost</option>
               <option value="rating">Highest Rating</option>
@@ -389,10 +483,11 @@
     <section class="view-panel" id="view-roommates">
       <div class="container roommate-section">
         <div class="roommate-hero-header">
-          <span class="badge badge-primary">Nestora Match</span>
+          <span class="badge badge-primary">Nestera Match</span>
           <h2>Find roommates you'll actually get along with.</h2>
           <p style="color:var(--text-secondary); font-size:1.05rem;">
-            Match with students and young professionals by compatibility score, lifestyle routines, study habits, and shared budget.
+            Match with students and young professionals by compatibility score, lifestyle routines, study habits, and
+            shared budget.
           </p>
 
           <!-- Toggle between Swiper and Grid -->
@@ -405,6 +500,32 @@
             </button>
           </div>
         </div>
+
+        <!-- Roommate Compatibility Quiz Hero CTA Banner -->
+        <div class="quiz-hero-card" id="quiz-hero-card">
+          <div class="quiz-hero-badge" id="quiz-hero-status-pill">
+            <span class="quiz-pulse-dot" id="quiz-hero-pulse-dot"></span>
+            <span id="quiz-hero-pill-text">Quiz Not Completed</span>
+          </div>
+          <div class="quiz-hero-body">
+            <div class="quiz-hero-text">
+              <h3 class="quiz-hero-title" id="quiz-hero-title">Take Compatibility Quiz</h3>
+              <p class="quiz-hero-sub" id="quiz-hero-sub">
+                Answer a few questions about your lifestyle and preferences to find roommates who match you better.
+              </p>
+              <div class="quiz-hero-uptodate" id="quiz-hero-uptodate" style="display:none;">
+                <span>✓ Your preferences are up to date</span>
+                <span class="quiz-hero-timestamp" id="quiz-hero-timestamp" style="opacity:0.8; font-size:0.75rem;"></span>
+              </div>
+            </div>
+            <div class="quiz-hero-action">
+              <button class="btn btn-primary btn-quiz-cta" id="btn-quiz-cta" onclick="openCompatibilityQuiz()">
+                <span id="btn-quiz-cta-text">Take the Quiz →</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
 
         <!-- Tinder-Style Deck View -->
         <div class="swiper-deck-wrapper" id="roommate-swiper-deck">
@@ -428,13 +549,18 @@
         <!-- Personalized Greeting Row -->
         <div class="dash-greeting-row">
           <div>
-            <h2 class="dash-greeting-title">Good morning, Het 👋</h2>
+            <h2 class="dash-greeting-title" id="dash-greeting-heading">Greetings, Resident 👋</h2>
             <div class="dash-property-pill">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              </svg>
               <span>Palm Grove Luxury Living — Flat 402, SG Highway</span>
             </div>
           </div>
-          <div style="display:flex; gap:10px;">
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="openProofVaultModal()">📸 Proof Vault</button>
+            <button class="btn btn-secondary btn-sm" onclick="openRoommateContractModal()">📜 House
+              Constitution</button>
             <button class="btn btn-secondary btn-sm" onclick="navigateTo('maintenance')">Report Issue</button>
             <button class="btn btn-primary btn-sm" onclick="openSplitExpenseModal()">+ Split Expense</button>
           </div>
@@ -463,9 +589,10 @@
           <div class="kpi-card kpi-primary-due">
             <div class="kpi-label">Next Payment</div>
             <div class="kpi-number">₹18,000</div>
-            <div class="kpi-subtext">Due in 5 days (Oct 5)</div>
-            <button class="btn btn-sm btn-secondary" style="margin-top:10px; width:100%;" onclick="triggerPayRentModal()">
-              Pay via UPI / Card →
+            <div class="kpi-subtext">Due in 5 days (Oct 5) • Zero Brokerage</div>
+            <button class="btn btn-sm btn-secondary" style="margin-top:10px; width:100%; font-weight:800;"
+              onclick="openStripePaymentModal()">
+              Pay with Stripe Escrow →
             </button>
           </div>
         </div>
@@ -511,11 +638,13 @@
                 <!-- Sep (Current) -->
                 <rect x="390" y="35" width="44" height="135" rx="6" fill="#EEF2FF" />
                 <rect x="390" y="60" width="44" height="110" rx="6" fill="#4F46E5" />
-                <text x="412" y="190" text-anchor="middle" font-size="11" fill="#4F46E5" font-weight="800">Sep (Current)</text>
+                <text x="412" y="190" text-anchor="middle" font-size="11" fill="#4F46E5" font-weight="800">Sep
+                  (Current)</text>
               </svg>
             </div>
 
-            <div style="display:flex; justify-content:space-around; font-size:0.825rem; font-weight:600; color:var(--text-secondary); border-top:1px solid var(--border-subtle); padding-top:14px;">
+            <div
+              style="display:flex; justify-content:space-around; font-size:0.825rem; font-weight:600; color:var(--text-secondary); border-top:1px solid var(--border-subtle); padding-top:14px;">
               <span>🟣 Base Rent: <strong>₹18,000</strong></span>
               <span>🟠 Electricity: <strong>₹1,500</strong></span>
               <span>🔵 Wi-Fi: <strong>₹700</strong></span>
@@ -534,7 +663,8 @@
               <!-- Dynamically populated from data.js -->
             </div>
 
-            <button class="btn btn-secondary btn-sm" style="width:100%; margin-top:16px;" onclick="openSplitExpenseModal()">
+            <button class="btn btn-secondary btn-sm" style="width:100%; margin-top:16px;"
+              onclick="openSplitExpenseModal()">
               + Add New Shared Expense
             </button>
           </div>
@@ -550,10 +680,14 @@
         <div class="maint-header-row">
           <div>
             <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -0.03em;">Maintenance & Support</h2>
-            <p style="color:var(--text-secondary); font-size: 0.95rem;">Track real-time technician visits, warranty repairs, and historical resolutions with guaranteed 48hr SLA.</p>
+            <p style="color:var(--text-secondary); font-size: 0.95rem;">Track real-time technician visits, warranty
+              repairs, and historical resolutions with guaranteed 48hr SLA.</p>
           </div>
           <button class="btn btn-primary" onclick="openReportIssueModal()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
             + Report an Issue
           </button>
         </div>
@@ -570,10 +704,11 @@
     <section class="view-panel" id="view-valuation">
       <div class="container valuation-section">
         <div class="val-hero-wrap">
-          <span class="badge badge-primary" style="margin-bottom:8px;">Nestora ValueIQ</span>
+          <span class="badge badge-primary" style="margin-bottom:8px;">Nestera ValueIQ</span>
           <h2>Know what your property is really worth.</h2>
           <p style="color:var(--text-secondary); font-size:1.05rem;">
-            Real-time algorithmic valuation based on verified sub-registrar transactions, carpet area comps, and local market demand.
+            Real-time algorithmic valuation based on verified sub-registrar transactions, carpet area comps, and local
+            market demand.
           </p>
         </div>
 
@@ -593,7 +728,8 @@
 
               <div class="val-form-group">
                 <label>Locality / Micro-Market</label>
-                <input type="text" class="val-input" id="val-locality-input" placeholder="e.g. Bodakdev, SG Highway" value="Bodakdev" required />
+                <input type="text" class="val-input" id="val-locality-input" placeholder="e.g. Bodakdev, SG Highway"
+                  value="Bodakdev" required />
               </div>
 
               <div class="val-form-group">
@@ -634,7 +770,9 @@
 
             <div style="text-align:center;">
               <button type="submit" class="btn btn-primary btn-lg">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
                 Calculate Estimated Value
               </button>
             </div>
@@ -692,9 +830,12 @@
             </div>
 
             <!-- Disclaimer Notice -->
-            <div style="padding:14px 18px; background:var(--accent-amber-light); border:1px solid rgba(245, 158, 11, 0.3); border-radius:var(--radius-md); font-size:0.825rem; color:#92400E; display:flex; align-items:center; gap:10px;">
+            <div
+              style="padding:14px 18px; background:var(--accent-amber-light); border:1px solid rgba(245, 158, 11, 0.3); border-radius:var(--radius-md); font-size:0.825rem; color:#92400E; display:flex; align-items:center; gap:10px;">
               <span style="font-size:1.2rem;">ℹ️</span>
-              <span><strong>Transparent Disclaimer:</strong> These figures are data-driven algorithmic estimates derived from verified micro-market transactions and recent leases. They serve as informational guidelines, not statutory appraisals.</span>
+              <span><strong>Transparent Disclaimer:</strong> These figures are data-driven algorithmic estimates derived
+                from verified micro-market transactions and recent leases. They serve as informational guidelines, not
+                statutory appraisals.</span>
             </div>
           </div>
         </div>
@@ -710,28 +851,34 @@
           <span class="badge badge-primary">Smart Digital Lease</span>
           <h2>Understand your agreement before you sign.</h2>
           <p style="color:var(--text-secondary); font-size:1.05rem;">
-            No hidden clauses. Every section translated side-by-side into simple, transparent English vetted by legal experts.
+            No hidden clauses. Every section translated side-by-side into simple, transparent English vetted by legal
+            experts.
           </p>
 
           <!-- Top Summary Quick Cards -->
           <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:12px; margin-top:24px; text-align:left;">
-            <div style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+            <div
+              style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
               <div style="font-size:0.7rem; color:var(--text-muted); font-weight:800;">MONTHLY RENT</div>
               <div style="font-size:1.1rem; font-weight:800; color:var(--primary);">₹18,000</div>
             </div>
-            <div style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+            <div
+              style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
               <div style="font-size:0.7rem; color:var(--text-muted); font-weight:800;">SECURITY DEPOSIT</div>
               <div style="font-size:1.1rem; font-weight:800; color:var(--text-primary);">₹36,000</div>
             </div>
-            <div style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+            <div
+              style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
               <div style="font-size:0.7rem; color:var(--text-muted); font-weight:800;">NOTICE PERIOD</div>
               <div style="font-size:1.1rem; font-weight:800; color:var(--text-primary);">2 Months</div>
             </div>
-            <div style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+            <div
+              style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
               <div style="font-size:0.7rem; color:var(--text-muted); font-weight:800;">LOCK-IN PERIOD</div>
               <div style="font-size:1.1rem; font-weight:800; color:var(--text-primary);">6 Months</div>
             </div>
-            <div style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+            <div
+              style="background:white; padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
               <div style="font-size:0.7rem; color:var(--text-muted); font-weight:800;">MAINTENANCE</div>
               <div style="font-size:1.1rem; font-weight:800; color:var(--accent-emerald-dark);">Owner Paid</div>
             </div>
@@ -746,14 +893,20 @@
         <!-- Signing Actions -->
         <div style="display:flex; justify-content:center; gap:16px; margin-top:36px;">
           <button class="btn btn-secondary btn-lg" onclick="triggerDownloadAgreement()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
             Download Agreement (PDF)
           </button>
           <button class="btn btn-outline btn-lg" onclick="triggerClarificationModal()">
             Request Landlord Clarification
           </button>
           <button class="btn btn-primary btn-lg" onclick="triggerSignAgreement()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
             Aadhaar eSign & Approve
           </button>
         </div>
@@ -761,88 +914,543 @@
     </section>
 
     <!-- ----------------------------------------------------------------------
-         VIEW 8: OWNER / LANDLORD DASHBOARD ("NESTORA HOST")
+         VIEW 8: OWNER / LANDLORD DASHBOARD ("NEST不开A HOST" / NESTERA HOST)
          ---------------------------------------------------------------------- -->
     <section class="view-panel" id="view-owner">
       <div class="container owner-layout">
+        <!-- Mobile Sidebar Toggle -->
+        <button class="btn btn-secondary btn-sm owner-mobile-toggle-btn" id="owner-mobile-sidebar-toggle" onclick="toggleOwnerMobileSidebar()" aria-label="Toggle owner navigation menu">
+          <span>☰</span> <span>Owner Menu</span>
+        </button>
+
         <div class="owner-container">
           <!-- Sidebar -->
-          <aside class="owner-sidebar">
-            <ul class="owner-menu">
-              <li class="owner-menu-item active">📊 Dashboard</li>
-              <li class="owner-menu-item">🏢 Properties (8)</li>
-              <li class="owner-menu-item">📝 Applications (5)</li>
-              <li class="owner-menu-item">👥 Tenants</li>
-              <li class="owner-menu-item">🔧 Maintenance (3)</li>
-              <li class="owner-menu-item">💳 Revenue & Payouts</li>
-              <li class="owner-menu-item">⚙️ Settings</li>
-            </ul>
+          <aside class="owner-sidebar" id="owner-sidebar-drawer" role="navigation" aria-label="Owner dashboard navigation">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:0 6px;">
+              <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">Owner Workspace</span>
+              <button class="btn btn-sm btn-outline" onclick="toggleOwnerMobileSidebar(false)" style="display:none; padding:2px 8px;" id="owner-sidebar-close-btn" aria-label="Close sidebar">✕</button>
+            </div>
+            <div class="owner-menu" role="tablist" aria-orientation="vertical">
+              <button class="owner-menu-item active" id="owner-tab-dashboard" role="tab" aria-selected="true" aria-controls="owner-panel-dashboard" onclick="switchOwnerTab('dashboard')">
+                <span>📊 Dashboard</span>
+              </button>
+              <button class="owner-menu-item" id="owner-tab-properties" role="tab" aria-selected="false" aria-controls="owner-panel-properties" onclick="switchOwnerTab('properties')">
+                <span>🏢 Properties</span>
+                <span class="owner-badge-counter" id="owner-badge-props">8</span>
+              </button>
+              <button class="owner-menu-item" id="owner-tab-applications" role="tab" aria-selected="false" aria-controls="owner-panel-applications" onclick="switchOwnerTab('applications')">
+                <span>📝 Applications</span>
+                <span class="owner-badge-counter badge-amber" id="owner-badge-apps">3</span>
+              </button>
+              <button class="owner-menu-item" id="owner-tab-maintenance" role="tab" aria-selected="false" aria-controls="owner-panel-maintenance" onclick="switchOwnerTab('maintenance')">
+                <span>🔧 Maintenance</span>
+                <span class="owner-badge-counter badge-rose" id="owner-badge-maint">🔴 3</span>
+              </button>
+              <button class="owner-menu-item" id="owner-tab-payments" role="tab" aria-selected="false" aria-controls="owner-panel-payments" onclick="switchOwnerTab('payments')">
+                <span>💳 Payments</span>
+              </button>
+              <button class="owner-menu-item" id="owner-tab-messages" role="tab" aria-selected="false" aria-controls="owner-panel-messages" onclick="switchOwnerTab('messages')">
+                <span>💬 Messages</span>
+                <span class="owner-badge-counter badge-primary" id="owner-badge-msgs">2</span>
+              </button>
+              <button class="owner-menu-item" id="owner-tab-notifications" role="tab" aria-selected="false" aria-controls="owner-panel-notifications" onclick="switchOwnerTab('notifications')">
+                <span>🔔 Notifications</span>
+                <span class="owner-badge-counter badge-amber" id="owner-badge-notifs">3</span>
+              </button>
+              <button class="owner-menu-item" id="owner-tab-analytics" role="tab" aria-selected="false" aria-controls="owner-panel-analytics" onclick="switchOwnerTab('analytics')">
+                <span>📈 Analytics</span>
+              </button>
+              <button class="owner-menu-item" id="owner-tab-profile" role="tab" aria-selected="false" aria-controls="owner-panel-profile" onclick="switchOwnerTab('profile')">
+                <span>👤 Profile</span>
+              </button>
+              <button class="owner-menu-item" id="owner-tab-settings" role="tab" aria-selected="false" aria-controls="owner-panel-settings" onclick="switchOwnerTab('settings')">
+                <span>⚙️ Settings</span>
+              </button>
+              <div style="height:1px; background:var(--border-subtle); margin:6px 0;"></div>
+              <button class="owner-menu-item" style="color:var(--accent-rose);" onclick="handleLogout()" aria-label="Sign out of owner dashboard">
+                <span>🚪 Sign Out</span>
+              </button>
+            </div>
           </aside>
 
           <!-- Main Content Area -->
           <div class="owner-content-area">
-            <div class="owner-header-row">
-              <div>
-                <h2>Host Portfolio Overview</h2>
-                <p style="color:var(--text-secondary); font-size:0.9rem;">Manage units across Ahmedabad and Gandhinagar with automated rent collection.</p>
+
+            <!-- 1. SUBPANEL: DASHBOARD (Overview) -->
+            <div class="owner-subpanel active" id="owner-panel-dashboard" role="tabpanel" aria-labelledby="owner-tab-dashboard">
+              <div class="owner-header-row">
+                <div>
+                  <h2 id="owner-greeting-heading">Greetings, Landlord Partner 👋</h2>
+                  <p style="color:var(--text-secondary); font-size:0.9rem;">
+                    Portfolio overview, automated rent escrow, and live maintenance updates across Ahmedabad and Gandhinagar.
+                  </p>
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="btn btn-secondary" onclick="openUtilityVerificationModal()">
+                    📄 Utility OCR Verify
+                  </button>
+                  <button class="btn btn-secondary" onclick="openProofVaultModal()">
+                    📦 Proof Vault Handover
+                  </button>
+                  <button class="btn btn-primary" onclick="openAddPropertyModal()">
+                    + Add Property
+                  </button>
+                </div>
               </div>
-              <button class="btn btn-primary" onclick="openAddPropertyModal()">
-                + Add Property
-              </button>
+
+              <!-- KPI Cards -->
+              <div class="dash-kpi-grid">
+                <div class="kpi-card" onclick="switchOwnerTab('properties')" style="cursor:pointer;" title="View all properties">
+                  <div class="kpi-label">Active Properties</div>
+                  <div class="kpi-number" id="owner-kpi-active-props">8</div>
+                  <div class="kpi-subtext">All verified by Nestera</div>
+                </div>
+
+                <div class="kpi-card" onclick="switchOwnerTab('properties')" style="cursor:pointer;" title="View occupancy status">
+                  <div class="kpi-label">Occupied Units</div>
+                  <div class="kpi-number" id="owner-kpi-occupied-units">7</div>
+                  <div class="kpi-subtext">87.5% Occupancy Rate</div>
+                </div>
+
+                <div class="kpi-card" onclick="switchOwnerTab('payments')" style="cursor:pointer;" title="View payments and escrow">
+                  <div class="kpi-label">Monthly Gross Revenue</div>
+                  <div class="kpi-number" id="owner-kpi-revenue">₹1.42L</div>
+                  <div class="kpi-subtext">94% On-time UPI collections</div>
+                </div>
+
+                <div class="kpi-card" onclick="switchOwnerTab('maintenance')" style="cursor:pointer;" title="View maintenance tickets">
+                  <div class="kpi-label">Pending Maintenance</div>
+                  <div class="kpi-number" id="owner-kpi-maint" style="color:var(--accent-amber);">3</div>
+                  <div class="kpi-subtext">Assigned to certified pros</div>
+                </div>
+              </div>
+
+              <!-- Quick Notification Banner if Unread -->
+              <div class="owner-table-card" id="owner-dash-urgent-banner" style="padding:16px 20px; background:linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border-left:4px solid var(--accent-amber);">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                  <div style="display:flex; align-items:center; gap:12px;">
+                    <span style="font-size:1.5rem;">🔧</span>
+                    <div>
+                      <strong style="color:#92400E; font-size:0.95rem;">Pending Tenant Maintenance Requests Awaiting Action</strong>
+                      <p style="margin:2px 0 0; font-size:0.82rem; color:#B45309;" id="owner-dash-urgent-text">
+                        3 tickets logged via Tenant Hub &amp; Relay Bot require review or technician scheduling.
+                      </p>
+                    </div>
+                  </div>
+                  <button class="btn btn-sm btn-primary" onclick="switchOwnerTab('maintenance')">Review Tickets →</button>
+                </div>
+              </div>
+
+              <!-- Quick Properties Preview Table -->
+              <div class="owner-table-card">
+                <div style="padding:18px 20px; border-bottom:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+                  <h3 style="font-size:1.15rem; font-weight:800;">Managed Living Units &amp; Active/Found Status</h3>
+                  <button class="btn btn-sm btn-outline" onclick="switchOwnerTab('properties')">View All (8) →</button>
+                </div>
+                <div class="table-responsive">
+                  <table class="nestora-table">
+                    <thead>
+                      <tr>
+                        <th>Property &amp; Unit</th>
+                        <th>Tenant</th>
+                        <th>Rent / Mo</th>
+                        <th>Listing Status</th>
+                        <th>Payment</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="owner-tenant-table-body">
+                      <!-- Populated via renderOwnerTable() -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
 
-            <!-- KPI Cards -->
-            <div class="dash-kpi-grid">
-              <div class="kpi-card">
-                <div class="kpi-label">Active Properties</div>
-                <div class="kpi-number">8</div>
-                <div class="kpi-subtext">All verified by Nestora</div>
+            <!-- 2. SUBPANEL: PROPERTIES -->
+            <div class="owner-subpanel" id="owner-panel-properties" role="tabpanel" aria-labelledby="owner-tab-properties">
+              <div class="owner-header-row">
+                <div>
+                  <h2>Properties Portfolio</h2>
+                  <p style="color:var(--text-secondary); font-size:0.9rem;">
+                    Manage your active student rentals, toggle unit availability (Active vs Found), and view verified lease titles.
+                  </p>
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="btn btn-secondary" onclick="openUtilityVerificationModal()">
+                    📄 OCR Title Verify
+                  </button>
+                  <button class="btn btn-primary" onclick="openAddPropertyModal()">
+                    + Add New Property
+                  </button>
+                </div>
               </div>
 
-              <div class="kpi-card">
-                <div class="kpi-label">Occupied Units</div>
-                <div class="kpi-number">7</div>
-                <div class="kpi-subtext">87.5% Occupancy Rate</div>
-              </div>
-
-              <div class="kpi-card">
-                <div class="kpi-label">Monthly Gross Revenue</div>
-                <div class="kpi-number">₹1.42L</div>
-                <div class="kpi-subtext">94% On-time UPI collections</div>
-              </div>
-
-              <div class="kpi-card">
-                <div class="kpi-label">Pending Maintenance</div>
-                <div class="kpi-number" style="color:var(--accent-amber);">3</div>
-                <div class="kpi-subtext">Assigned to certified pros</div>
+              <div class="owner-table-card">
+                <div style="padding:16px 20px; border-bottom:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                  <div style="display:flex; gap:8px;">
+                    <span class="badge badge-verified">Direct Supabase Sync</span>
+                    <span class="badge badge-emerald">Escrow Protected</span>
+                  </div>
+                  <span style="font-size:0.85rem; color:var(--text-muted);">
+                    Click listing status to toggle public visibility.
+                  </span>
+                </div>
+                <div class="table-responsive">
+                  <table class="nestora-table">
+                    <thead>
+                      <tr>
+                        <th>Property &amp; Unit</th>
+                        <th>Tenant</th>
+                        <th>Rent / Mo</th>
+                        <th>Listing Status (Active / Found)</th>
+                        <th>Payment Status</th>
+                        <th>Verification</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="owner-tenant-table-body-full">
+                      <!-- Dynamically synced via renderOwnerTable() -->
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
 
-            <!-- Tenant Management Table -->
-            <div class="owner-table-card">
-              <div style="padding:18px 20px; border-bottom:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
-                <h3 style="font-size:1.15rem; font-weight:800;">Tenant & Lease Status</h3>
-                <span class="badge badge-verified">Direct Escrow Active</span>
+            <!-- 3. SUBPANEL: APPLICATIONS -->
+            <div class="owner-subpanel" id="owner-panel-applications" role="tabpanel" aria-labelledby="owner-tab-applications">
+              <div class="owner-header-row">
+                <div>
+                  <h2>Rental Applications</h2>
+                  <p style="color:var(--text-secondary); font-size:0.9rem;">
+                    Review student applicant credentials, university affiliations, and desired lease duration (2–4 months).
+                  </p>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="loadOwnerApplications()">🔄 Refresh Applications</button>
               </div>
-              <div class="table-responsive">
-                <table class="nestora-table">
-                  <thead>
-                    <tr>
-                      <th>Property</th>
-                      <th>Tenant</th>
-                      <th>Monthly Rent</th>
-                      <th>Payment Status</th>
-                      <th>Maintenance</th>
-                      <th>Lease Expiry</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody id="owner-tenant-table-body">
-                    <!-- Dynamically populated from data.js -->
-                  </tbody>
-                </table>
+
+              <div class="owner-table-card">
+                <div style="padding:18px 20px; border-bottom:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+                  <h3 style="font-size:1.15rem; font-weight:800; margin:0;">Incoming Tenant Applications</h3>
+                  <span class="badge badge-primary">Direct KYC &amp; College Verification</span>
+                </div>
+                <div id="owner-applications-list" style="padding: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px;">
+                  <!-- Populated dynamically via loadOwnerApplications() -->
+                </div>
               </div>
             </div>
+
+            <!-- 4. SUBPANEL: MAINTENANCE -->
+            <div class="owner-subpanel" id="owner-panel-maintenance" role="tabpanel" aria-labelledby="owner-tab-maintenance">
+              <div class="owner-header-row">
+                <div>
+                  <h2>Maintenance &amp; Repairs Hub</h2>
+                  <p style="color:var(--text-secondary); font-size:0.9rem;">
+                    Direct relay of tenant reported issues, WhatsApp bot dispatches, and SLA resolution tracking.
+                  </p>
+                </div>
+                <span class="badge badge-emerald" style="padding:6px 12px; font-size:0.82rem;">
+                  WhatsApp &amp; Twilio Sync Active
+                </span>
+              </div>
+
+              <div class="owner-table-card">
+                <div style="padding:18px 20px; border-bottom:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                  <div>
+                    <h3 style="font-size:1.15rem; font-weight:800; margin:0 0 4px;">Active Tenant Work Orders</h3>
+                    <p style="font-size:0.8rem; color:var(--text-secondary); margin:0;">
+                      Click "View Full Ticket" to inspect photos, description, and update resolution status.
+                    </p>
+                  </div>
+                  <button class="btn btn-sm btn-outline" onclick="renderOwnerMaintenanceTickets()">🔄 Refresh Tickets</button>
+                </div>
+                <div id="owner-maintenance-list" style="padding: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px;">
+                  <!-- Populated dynamically via renderOwnerMaintenanceTickets() -->
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. SUBPANEL: PAYMENTS -->
+            <div class="owner-subpanel" id="owner-panel-payments" role="tabpanel" aria-labelledby="owner-tab-payments">
+              <div class="owner-header-row">
+                <div>
+                  <h2>Payments, Escrow &amp; Payouts</h2>
+                  <p style="color:var(--text-secondary); font-size:0.9rem;">
+                    Automated rent payouts, Stripe escrow releases, and compliant GST rental invoices.
+                  </p>
+                </div>
+                <button class="btn btn-primary" onclick="showToast('Initiated bank payout verification with ICICI Bank gateway.')">
+                  ⚡ Request Instant UPI Payout
+                </button>
+              </div>
+
+              <div class="dash-kpi-grid">
+                <div class="kpi-card">
+                  <div class="kpi-label">Gross Rent Collected (Sept)</div>
+                  <div class="kpi-number" style="color:var(--primary);">₹1,42,000</div>
+                  <div class="kpi-subtext">Direct to Nestera Escrow Vault</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-label">Net Disbursed to Bank</div>
+                  <div class="kpi-number" style="color:var(--accent-emerald-dark);">₹1,38,500</div>
+                  <div class="kpi-subtext">Automated direct bank payout</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-label">Refundable Tenant Deposits Held</div>
+                  <div class="kpi-number">₹2,84,000</div>
+                  <div class="kpi-subtext">Protected in escrow vault</div>
+                </div>
+              </div>
+
+              <div class="owner-table-card">
+                <div style="padding:18px 20px; border-bottom:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+                  <h3 style="font-size:1.15rem; font-weight:800;">Recent Rental Collections &amp; GST Invoices</h3>
+                  <span class="badge badge-verified">HDFC Bank Verified Account</span>
+                </div>
+                <div class="table-responsive">
+                  <table class="nestora-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Property</th>
+                        <th>Tenant</th>
+                        <th>Amount</th>
+                        <th>Channel</th>
+                        <th>Status</th>
+                        <th>Invoice</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>15 Sep 2026</td>
+                        <td>Palm Grove Luxury Living - 402</td>
+                        <td>Aman Singh</td>
+                        <td><strong>₹18,000</strong></td>
+                        <td>UPI Autopay</td>
+                        <td><span class="badge badge-verified">Settled ✓</span></td>
+                        <td><button class="btn btn-sm btn-outline" onclick="showToast('GST Rental Invoice #INV-2026-091 downloaded!')">PDF</button></td>
+                      </tr>
+                      <tr>
+                        <td>10 Sep 2026</td>
+                        <td>Bodakdev Minimal Studio - 201</td>
+                        <td>Siddharth Malhotra</td>
+                        <td><strong>₹22,000</strong></td>
+                        <td>Stripe Escrow</td>
+                        <td><span class="badge badge-verified">Settled ✓</span></td>
+                        <td><button class="btn btn-sm btn-outline" onclick="showToast('GST Rental Invoice #INV-2026-092 downloaded!')">PDF</button></td>
+                      </tr>
+                      <tr>
+                        <td>05 Sep 2026</td>
+                        <td>Campus Edge Studio - 301</td>
+                        <td>Arjun Mehta</td>
+                        <td><strong>₹14,500</strong></td>
+                        <td>Net Banking</td>
+                        <td><span class="badge badge-verified">Settled ✓</span></td>
+                        <td><button class="btn btn-sm btn-outline" onclick="showToast('GST Rental Invoice #INV-2026-093 downloaded!')">PDF</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. SUBPANEL: MESSAGES -->
+            <div class="owner-subpanel" id="owner-panel-messages" role="tabpanel" aria-labelledby="owner-tab-messages">
+              <div class="owner-header-row">
+                <div>
+                  <h2>Tenant Messages &amp; Relay Threads</h2>
+                  <p style="color:var(--text-secondary); font-size:0.9rem;">
+                    Communicate with active tenants and monitor automated WhatsApp maintenance dispatches.
+                  </p>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="toggleMaintenanceChat(true)">💬 Open Live Relay Bot</button>
+              </div>
+
+              <div class="owner-table-card" style="padding:20px;">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:16px;">
+                  <div style="background:var(--bg-surface-secondary); padding:16px; border-radius:12px; border:1px solid var(--border-subtle);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                      <strong>Aman Singh (Palm Grove 402)</strong>
+                      <span class="badge badge-primary">2h ago</span>
+                    </div>
+                    <p style="font-size:0.85rem; color:var(--text-secondary); margin:0 0 12px;">
+                      "Hi Landlord, technician Ramesh Kumar came and checked the geyser. Element ordered, will finish tomorrow morning."
+                    </p>
+                    <button class="btn btn-sm btn-primary" onclick="showToast('Opened conversation with Aman Singh')">Reply</button>
+                  </div>
+
+                  <div style="background:var(--bg-surface-secondary); padding:16px; border-radius:12px; border:1px solid var(--border-subtle);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                      <strong>Siddharth Malhotra (Bodakdev 201)</strong>
+                      <span class="badge badge-amber">Yesterday</span>
+                    </div>
+                    <p style="font-size:0.85rem; color:var(--text-secondary); margin:0 0 12px;">
+                      "Thank you for approving the lease agreement! When can I collect the physical keys from the building guard?"
+                    </p>
+                    <button class="btn btn-sm btn-primary" onclick="showToast('Opened conversation with Siddharth Malhotra')">Reply</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 7. SUBPANEL: NOTIFICATIONS -->
+            <div class="owner-subpanel" id="owner-panel-notifications" role="tabpanel" aria-labelledby="owner-tab-notifications">
+              <div class="owner-header-row">
+                <div>
+                  <h2>Owner Notifications &amp; Alerts</h2>
+                  <p style="color:var(--text-secondary); font-size:0.9rem;">
+                    Real-time notifications for tenant maintenance requests, applications, and rent escrow releases.
+                  </p>
+                </div>
+                <button class="btn btn-sm btn-secondary" onclick="markAllNotificationsRead()">Mark All Read</button>
+              </div>
+
+              <div class="owner-table-card">
+                <div style="padding:16px 20px; border-bottom:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+                  <h3 style="font-size:1.1rem; font-weight:800; margin:0;">Inbox</h3>
+                  <span class="badge badge-rose" id="owner-notif-inbox-badge">3 Unread Alerts</span>
+                </div>
+                <div id="owner-notifications-full-list" style="padding:16px; display:flex; flex-direction:column; gap:12px;">
+                  <!-- Populated dynamically via renderOwnerNotificationsList() -->
+                </div>
+              </div>
+            </div>
+
+            <!-- 8. SUBPANEL: ANALYTICS -->
+            <div class="owner-subpanel" id="owner-panel-analytics" role="tabpanel" aria-labelledby="owner-tab-analytics">
+              <div class="owner-header-row">
+                <div>
+                  <h2>Portfolio Yield &amp; Occupancy Analytics</h2>
+                  <p style="color:var(--text-secondary); font-size:0.9rem;">
+                    Key performance metrics and rental trends benchmarking your properties across Ahmedabad &amp; Gandhinagar.
+                  </p>
+                </div>
+              </div>
+
+              <div class="dash-kpi-grid">
+                <div class="kpi-card">
+                  <div class="kpi-label">Annualized Rental Yield</div>
+                  <div class="kpi-number" style="color:var(--primary);">4.2%</div>
+                  <div class="kpi-subtext">+0.8% above Ahmedabad avg (3.4%)</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-label">Average Vacancy Duration</div>
+                  <div class="kpi-number">6 Days</div>
+                  <div class="kpi-subtext">Due to Nestera student matching</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-label">Maintenance Cost Ratio</div>
+                  <div class="kpi-number" style="color:var(--accent-emerald-dark);">2.1%</div>
+                  <div class="kpi-subtext">Well within 5% safe benchmark</div>
+                </div>
+              </div>
+
+              <div class="owner-table-card" style="padding:24px;">
+                <h3 style="font-size:1.15rem; font-weight:800; margin-bottom:12px;">Local Market Rental Comp Analysis</h3>
+                <p style="font-size:0.875rem; color:var(--text-secondary); margin-bottom:16px;">
+                  Properties located near Nirma University, CEPT, and GIFT City demand 15-22% premium for furnished accommodation.
+                </p>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px;">
+                  <div style="background:var(--bg-surface-secondary); padding:16px; border-radius:10px;">
+                    <strong style="display:block; margin-bottom:4px;">SG Highway / Nirma</strong>
+                    <div style="font-size:1.2rem; font-weight:800; color:var(--primary);">₹18,000 – ₹24,000</div>
+                    <span style="font-size:0.75rem; color:var(--text-muted);">High student density</span>
+                  </div>
+                  <div style="background:var(--bg-surface-secondary); padding:16px; border-radius:10px;">
+                    <strong style="display:block; margin-bottom:4px;">Bodakdev / Sindhu Bhavan</strong>
+                    <div style="font-size:1.2rem; font-weight:800; color:var(--primary);">₹22,000 – ₹32,000</div>
+                    <span style="font-size:0.75rem; color:var(--text-muted);">Young professional preferred</span>
+                  </div>
+                  <div style="background:var(--bg-surface-secondary); padding:16px; border-radius:10px;">
+                    <strong style="display:block; margin-bottom:4px;">GIFT City / Gandhinagar</strong>
+                    <div style="font-size:1.2rem; font-weight:800; color:var(--primary);">₹16,000 – ₹20,000</div>
+                    <span style="font-size:0.75rem; color:var(--text-muted);">Tech &amp; finance interns</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 9. SUBPANEL: PROFILE -->
+            <div class="owner-subpanel" id="owner-panel-profile" role="tabpanel" aria-labelledby="owner-tab-profile">
+              <div class="owner-header-row">
+                <div>
+                  <h2>Owner &amp; Landlord Profile</h2>
+                  <p style="color:var(--text-secondary); font-size:0.9rem;">
+                    Manage your verified host credentials, banking details for escrow payouts, and contact information.
+                  </p>
+                </div>
+              </div>
+
+              <div class="owner-table-card" style="padding:24px;">
+                <div style="display:flex; align-items:center; gap:18px; margin-bottom:24px; flex-wrap:wrap;">
+                  <img src="images/avatars/avatar-neutral.svg" alt="Owner Avatar" id="owner-profile-avatar" style="width:72px; height:72px; border-radius:50%; object-fit:cover; border:3px solid var(--primary-light);" />
+                  <div>
+                    <h3 style="margin:0 0 6px;" id="owner-profile-name">Landlord Partner</h3>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                      <span class="badge badge-verified">✓ Verified Property Host</span>
+                      <span class="badge badge-emerald">✓ Aadhaar &amp; PAN e-Verified</span>
+                      <span class="badge badge-primary">Direct Escrow Partner</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:18px;">
+                  <div style="background:var(--bg-surface-secondary); padding:16px; border-radius:12px;">
+                    <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Contact Email</span>
+                    <div style="font-size:0.95rem; font-weight:700; margin-top:4px;" id="owner-profile-email">owner@example.com</div>
+                  </div>
+                  <div style="background:var(--bg-surface-secondary); padding:16px; border-radius:12px;">
+                    <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Registered Mobile</span>
+                    <div style="font-size:0.95rem; font-weight:700; margin-top:4px;" id="owner-profile-phone">+91 98250 12345</div>
+                  </div>
+                  <div style="background:var(--bg-surface-secondary); padding:16px; border-radius:12px;">
+                    <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Registered Escrow Bank</span>
+                    <div style="font-size:0.95rem; font-weight:700; margin-top:4px;">HDFC Bank • Account ****4821</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 10. SUBPANEL: SETTINGS -->
+            <div class="owner-subpanel" id="owner-panel-settings" role="tabpanel" aria-labelledby="owner-tab-settings">
+              <div class="owner-header-row">
+                <div>
+                  <h2>Owner Preferences &amp; Automation Settings</h2>
+                  <p style="color:var(--text-secondary); font-size:0.9rem;">
+                    Configure automated maintenance technician dispatch, WhatsApp alerts, and rental deposit escrow rules.
+                  </p>
+                </div>
+              </div>
+
+              <div class="owner-table-card" style="padding:24px;">
+                <div style="display:flex; flex-direction:column; gap:20px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; border-bottom:1px solid var(--border-subtle); flex-wrap:wrap; gap:10px;">
+                    <div>
+                      <strong style="font-size:0.95rem; display:block;">Instant WhatsApp Alerts for Maintenance Requests</strong>
+                      <span style="font-size:0.8rem; color:var(--text-secondary);">Receive immediate WhatsApp notifications whenever a tenant raises an urgent repair.</span>
+                    </div>
+                    <input type="checkbox" checked style="width:20px; height:20px; accent-color:var(--primary); cursor:pointer;" onchange="showToast('WhatsApp notification preference saved.')" />
+                  </div>
+
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; border-bottom:1px solid var(--border-subtle); flex-wrap:wrap; gap:10px;">
+                    <div>
+                      <strong style="font-size:0.95rem; display:block;">Auto-Acknowledge Maintenance Tickets within 2 Hours</strong>
+                      <span style="font-size:0.8rem; color:var(--text-secondary);">Automatically dispatch verified local electricians or plumbers for routine issues.</span>
+                    </div>
+                    <input type="checkbox" checked style="width:20px; height:20px; accent-color:var(--primary); cursor:pointer;" onchange="showToast('Auto-dispatch preference saved.')" />
+                  </div>
+
+                  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                    <div>
+                      <strong style="font-size:0.95rem; display:block;">Direct Escrow Rent Payout Autopilot</strong>
+                      <span style="font-size:0.8rem; color:var(--text-secondary);">Automatically transfer monthly tenant rental collections to bank account on the 5th of each month.</span>
+                    </div>
+                    <input type="checkbox" checked style="width:20px; height:20px; accent-color:var(--primary); cursor:pointer;" onchange="showToast('Escrow autopilot preference saved.')" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -914,7 +1522,8 @@
                 <span>Interactive AC Usage Simulator</span>
                 <span id="simulator-ac-hours" style="color:var(--primary);">6 hrs/day</span>
               </div>
-              <input type="range" class="simulator-range" min="0" max="16" value="6" oninput="handleSimulatorChange(this.value)" />
+              <input type="range" class="simulator-range" min="0" max="16" value="6"
+                oninput="handleSimulatorChange(this.value)" />
               <div style="font-size:0.725rem; color:var(--text-muted); margin-top:4px;">
                 Slide to test power consumption costs with AC on Ahmedabad Torrent Power slab rates.
               </div>
@@ -922,9 +1531,11 @@
           </div>
 
           <!-- Description & Amenities -->
-          <div style="background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); padding:24px; margin-bottom:24px;">
+          <div
+            style="background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); padding:24px; margin-bottom:24px;">
             <h4 style="font-size:1.15rem; font-weight:800; margin-bottom:10px;">About This Space</h4>
-            <p id="modal-prop-description" style="font-size:0.925rem; color:var(--text-secondary); line-height:1.6; margin-bottom:20px;">
+            <p id="modal-prop-description"
+              style="font-size:0.925rem; color:var(--text-secondary); line-height:1.6; margin-bottom:20px;">
               Sunlit modern apartment...
             </p>
 
@@ -953,7 +1564,7 @@
       <div class="action-dock">
         <button class="btn btn-secondary" onclick="triggerContactOwner()">Contact Owner</button>
         <button class="btn btn-outline" onclick="triggerScheduleVisit()">Schedule Visit</button>
-        <button class="btn btn-primary" style="flex:1;" onclick="triggerApplyNow()">Apply Now (Zero Brokerage)</button>
+        <button class="btn btn-primary" style="flex:1;" onclick="openAccommodationCheckoutModal(AppState.selectedPropertyId)">Book Accommodation (Zero Brokerage) →</button>
       </div>
     </div>
   </div>
@@ -985,7 +1596,8 @@
         <form onsubmit="submitNewSplitExpense(event)">
           <div class="val-form-group" style="margin-bottom:16px;">
             <label>Expense Title</label>
-            <input type="text" class="val-input" id="split-title-input" placeholder="e.g. Jio Fiber 300 Mbps bill" required />
+            <input type="text" class="val-input" id="split-title-input" placeholder="e.g. Jio Fiber 300 Mbps bill"
+              required />
           </div>
 
           <div class="val-form-group" style="margin-bottom:16px;">
@@ -1047,17 +1659,20 @@
 
           <div class="val-form-group" style="margin-bottom:14px;">
             <label>Issue Title</label>
-            <input type="text" class="val-input" id="issue-title-input" placeholder="e.g. Geyser tripping circuit breaker" required />
+            <input type="text" class="val-input" id="issue-title-input"
+              placeholder="e.g. Geyser tripping circuit breaker" required />
           </div>
 
           <div class="val-form-group" style="margin-bottom:14px;">
             <label>Location in Apartment</label>
-            <input type="text" class="val-input" id="issue-location-input" placeholder="e.g. Common Bathroom" value="Master Bathroom" required />
+            <input type="text" class="val-input" id="issue-location-input" placeholder="e.g. Common Bathroom"
+              value="Master Bathroom" required />
           </div>
 
           <div class="val-form-group" style="margin-bottom:14px;">
             <label>Detailed Description</label>
-            <textarea class="val-input" id="issue-desc-input" rows="3" placeholder="Explain what happened and what time you prefer the visit..." required></textarea>
+            <textarea class="val-input" id="issue-desc-input" rows="3"
+              placeholder="Explain what happened and what time you prefer the visit..." required></textarea>
           </div>
 
           <div class="val-form-group" style="margin-bottom:20px;">
@@ -1087,18 +1702,20 @@
       <div style="padding: 28px;">
         <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 6px;">List a New Space</h3>
         <p style="color:var(--text-secondary); font-size:0.875rem; margin-bottom: 20px;">
-          List transparently on Nestora with zero brokerage and verified tenant screening.
+          List transparently on Nestera with zero brokerage and verified tenant screening.
         </p>
 
         <form onsubmit="submitNewOwnerProperty(event)">
           <div class="val-form-group" style="margin-bottom:14px;">
             <label>Property Name / Tower</label>
-            <input type="text" class="val-input" id="prop-title-input" placeholder="e.g. Shaligram Prime — 3BHK" required />
+            <input type="text" class="val-input" id="prop-title-input" placeholder="e.g. Shaligram Prime — 3BHK"
+              required />
           </div>
 
           <div class="val-form-group" style="margin-bottom:14px;">
             <label>Locality & City</label>
-            <input type="text" class="val-input" id="prop-locality-input" placeholder="e.g. South Bopal, Ahmedabad" value="SG Highway, Ahmedabad" required />
+            <input type="text" class="val-input" id="prop-locality-input" placeholder="e.g. South Bopal, Ahmedabad"
+              value="SG Highway, Ahmedabad" required />
           </div>
 
           <div class="val-form-group" style="margin-bottom:14px;">
@@ -1123,39 +1740,69 @@
       <button class="modal-close-btn" onclick="closeProfileModal()">✕</button>
       <div class="profile-tab-content">
         <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
-          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80" alt="Het Darji" style="width:72px; height:72px; border-radius:50%; object-fit:cover; border:2px solid var(--primary);" />
+          <img src="images/avatars/avatar-neutral.svg"
+            id="profile-modal-avatar"
+            alt="User Avatar"
+            style="width:72px; height:72px; border-radius:50%; object-fit:cover; border:2px solid var(--primary);" />
           <div>
-            <h3 style="font-size:1.4rem; font-weight:800;">Het Darji</h3>
-            <p style="font-size:0.875rem; color:var(--text-secondary);">Student & Tech Enthusiast • Ahmedabad</p>
+            <h3 id="profile-modal-name" style="font-size:1.4rem; font-weight:800;">Resident</h3>
+            <p id="profile-modal-role" style="font-size:0.875rem; color:var(--text-secondary);">Verified Resident • Ahmedabad</p>
             <span class="badge badge-verified" style="margin-top:4px;">100% Trust Score</span>
           </div>
         </div>
 
         <div class="verification-strip">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--accent-emerald-dark);"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            style="color:var(--accent-emerald-dark);">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
           <div>
             <div style="font-weight:700; font-size:0.9rem; color:#14532D;">DigiLocker Identity Verified</div>
-            <div style="font-size:0.775rem; color:#15803D;">Aadhaar ending in •••• 4892 linked with instant eSign approval.</div>
+            <div style="font-size:0.775rem; color:#15803D;">Aadhaar ending in •••• 4892 linked with instant eSign
+              approval.</div>
           </div>
         </div>
 
         <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px;">
-          <div style="display:flex; justify-content:space-between; padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-sm); font-size:0.875rem;">
+          <div
+            style="display:flex; justify-content:space-between; padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-sm); font-size:0.875rem;">
             <span style="color:var(--text-muted); font-weight:600;">Phone Verification:</span>
-            <span style="font-weight:700; color:var(--accent-emerald-dark);">✓ +91 98765 43210</span>
+            <span id="profile-modal-phone" style="font-weight:700; color:var(--accent-emerald-dark);">✓ +91 98250 12345</span>
           </div>
-          <div style="display:flex; justify-content:space-between; padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-sm); font-size:0.875rem;">
+          <div
+            style="display:flex; justify-content:space-between; padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-sm); font-size:0.875rem;">
             <span style="color:var(--text-muted); font-weight:600;">Email Verification:</span>
-            <span style="font-weight:700; color:var(--accent-emerald-dark);">✓ het.darji@example.com</span>
+            <span id="profile-modal-email" style="font-weight:700; color:var(--accent-emerald-dark);">✓ resident@example.com</span>
           </div>
-          <div style="display:flex; justify-content:space-between; padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-sm); font-size:0.875rem;">
-            <span style="color:var(--text-muted); font-weight:600;">Current Active Lease:</span>
-            <span style="font-weight:700; color:var(--primary);">Flat 402, Palm Grove (11M)</span>
+          <div
+            style="display:flex; justify-content:space-between; padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-sm); font-size:0.875rem;">
+            <span style="color:var(--text-muted); font-weight:600;">Permanent Role:</span>
+            <span id="profile-modal-perm-role" style="font-weight:700; color:var(--primary);">Locked &amp; Verified</span>
+          </div>
+          <div
+            style="display:flex; justify-content:space-between; padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-sm); font-size:0.875rem;">
+            <span style="color:var(--text-muted); font-weight:600;">Gender:</span>
+            <span id="profile-modal-gender" style="font-weight:700; color:var(--text-primary);">Not specified</span>
+          </div>
+          <div
+            style="display:flex; justify-content:space-between; padding:12px; background:var(--bg-surface-secondary); border-radius:var(--radius-sm); font-size:0.875rem;">
+            <span style="color:var(--text-muted); font-weight:600;">Date of Birth:</span>
+            <span id="profile-modal-dob" style="font-weight:700; color:var(--text-primary);">Not specified</span>
           </div>
         </div>
 
-        <button class="btn btn-primary" style="width:100%;" onclick="closeProfileModal(); showToast('Profile settings up to date');">
+        <button class="btn btn-outline" style="width:100%; margin-bottom:10px;"
+          onclick="closeProfileModal(); openProfileCompletionModal();">
+          ✏️ Edit Gender &amp; Date of Birth
+        </button>
+        <button class="btn btn-primary" style="width:100%;"
+          onclick="closeProfileModal(); showToast('Profile preferences synchronized with Supabase');">
           Save Preferences
+        </button>
+        <button class="btn btn-secondary" style="width:100%; margin-top:10px; color:var(--accent-rose); font-weight:700;"
+          onclick="handleLogout()">
+          🚪 Sign Out of Nestera Account
         </button>
       </div>
     </div>
@@ -1164,7 +1811,8 @@
   <!-- ==========================================================================
        NOTIFICATION DRAWER (SLIDE-OVER)
        ========================================================================== -->
-  <div class="notif-drawer-backdrop" id="notif-drawer-modal" onclick="if(event.target === this) toggleNotificationDrawer(false)">
+  <div class="notif-drawer-backdrop" id="notif-drawer-modal"
+    onclick="if(event.target === this) toggleNotificationDrawer(false)">
     <div class="notif-drawer">
       <div class="notif-drawer-header">
         <div style="display:flex; align-items:center; gap:8px;">
@@ -1188,29 +1836,1583 @@
        ========================================================================== -->
   <nav class="mobile-bottom-bar">
     <button class="bottom-tab active" data-target="landing">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      </svg>
       <span>Home</span>
     </button>
     <button class="bottom-tab" data-target="discovery">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
       <span>Explore</span>
     </button>
     <button class="bottom-tab" data-target="roommates">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+        <circle cx="9" cy="7" r="4"></circle>
+      </svg>
       <span>Roommates</span>
     </button>
     <button class="bottom-tab" data-target="dashboard">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+        <line x1="2" y1="10" x2="22" y2="10"></line>
+      </svg>
       <span>Expenses</span>
     </button>
     <button class="bottom-tab" data-target="profile" onclick="openProfileModal()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
       <span>Profile</span>
     </button>
   </nav>
 
+  <!-- ==========================================================================
+       MODAL 7: ROLE SELECTION MODAL (addme.md Specification)
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="role-select-modal">
+    <div class="details-modal-container" style="max-width: 560px;">
+      <button class="modal-close-btn" onclick="closeRoleSelectModal()">✕</button>
+      <div style="padding: 28px;">
+        <span
+          style="font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em;">
+          Permanent Account Setup
+        </span>
+        <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin: 6px 0 8px 0;">
+          How will you use Nestera?
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 24px;">
+          Select your primary role. This selection is <strong>permanent</strong> and customizes your verified identity
+          and dashboard features.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px;">
+          <!-- Tenant Option Card -->
+          <div id="role-card-tenant" onclick="selectRoleOption('tenant')"
+            style="padding: 22px 18px; border-radius: var(--radius-md); border: 2.5px solid var(--primary); background: #EEF2FF; cursor: pointer; transition: all 0.2s ease; position: relative;">
+            <span style="font-size: 2.4rem; display: block; margin-bottom: 8px;">🏠</span>
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin: 0 0 6px 0;">I'm a Tenant</h3>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0; line-height: 1.45;">
+              Search short-term student spaces, roommate matching, Proof Vault condition handovers, and Stripe payments.
+            </p>
+          </div>
+
+          <!-- Owner Option Card -->
+          <div id="role-card-owner" onclick="selectRoleOption('owner')"
+            style="padding: 22px 18px; border-radius: var(--radius-md); border: 2px solid var(--border-medium); background: var(--bg-surface); cursor: pointer; transition: all 0.2s ease; position: relative;">
+            <span style="font-size: 2.4rem; display: block; margin-bottom: 8px;">🏢</span>
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin: 0 0 6px 0;">I'm an Owner</h3>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0; line-height: 1.45;">
+              List properties, toggle Active/Found availability, verify utility bills via OCR, and collect rent.
+            </p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button class="btn btn-secondary" onclick="closeRoleSelectModal()">Cancel</button>
+          <button class="btn btn-primary" onclick="proceedFromRoleSelect()" style="padding: 10px 24px;">Continue
+            →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 8: PERMANENT AUTH MODAL (SIGNUP & LOGIN)
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="auth-modal">
+    <div class="details-modal-container" style="max-width: 480px;">
+      <button class="modal-close-btn" onclick="closeAuthModal()">✕</button>
+      <div style="padding: 28px;">
+        <span id="auth-modal-eyebrow"
+          style="font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">
+          Step 2: Permanent Registration
+        </span>
+        <h2 id="auth-modal-title"
+          style="font-size: 1.55rem; font-weight: 800; color: var(--text-primary); margin: 6px 0 8px 0;">
+          Create your Nestera account
+        </h2>
+        <p id="auth-modal-subtitle" style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">
+          Find your space. Find your people. Live smarter.
+        </p>
+
+        <!-- Read-Only Permanent Role Context -->
+        <div
+          style="background: #EEF2FF; border: 1.5px solid var(--primary-light); border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <span
+              style="font-size: 0.72rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">Assigned
+              Role:</span>
+            <div id="auth-assigned-role-text" style="font-size: 0.95rem; font-weight: 800; color: var(--text-primary);">
+              🏠 Student / Youth Tenant
+            </div>
+          </div>
+          <span
+            style="font-size: 0.7rem; background: white; padding: 2px 6px; border-radius: 4px; font-weight: 700; color: var(--text-muted); border: 1px solid var(--border-subtle);">
+            🔒 Read-Only
+          </span>
+        </div>
+
+        <!-- Auth Form -->
+        <form id="nestora-auth-form" onsubmit="handleAuthSubmit(event)">
+          <div id="auth-fullname-group" class="val-form-group" style="margin-bottom: 12px;">
+            <label>Full Legal Name</label>
+            <input type="text" class="val-input" id="auth-fullname-input" placeholder="e.g. Aman Singh" required />
+          </div>
+
+          <div class="val-form-group" style="margin-bottom: 12px;">
+            <label>Email Address</label>
+            <input type="email" class="val-input" id="auth-email-input" placeholder="e.g. aman.singh@gmail.com"
+              required />
+          </div>
+
+          <div id="auth-phone-group" class="val-form-group" style="margin-bottom: 12px;">
+            <label>Phone Number</label>
+            <input type="tel" class="val-input" id="auth-phone-input" placeholder="+91 98250 XXXXX" />
+          </div>
+
+          <!-- Gender (Signup only) -->
+          <div id="auth-gender-group" class="val-form-group" style="margin-bottom: 12px;">
+            <label>Gender</label>
+            <select class="val-select" id="auth-gender-select" style="width: 100%;">
+              <option value="" disabled selected>Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+          </div>
+
+          <!-- Date of Birth (Signup only) -->
+          <div id="auth-dob-group" class="val-form-group" style="margin-bottom: 12px;">
+            <label>Date of Birth</label>
+            <input type="date" class="val-input" id="auth-dob-input" style="width: 100%;" />
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 3px;">
+              Cannot be in the future.
+            </div>
+          </div>
+
+          <div class="val-form-group" style="margin-bottom: 12px;">
+            <label>Password</label>
+            <input type="password" class="val-input" id="auth-password-input" placeholder="Minimum 6 characters"
+              required />
+          </div>
+
+          <div id="auth-confirm-group" class="val-form-group" style="margin-bottom: 12px;">
+            <label>Confirm Password</label>
+            <input type="password" class="val-input" id="auth-confirm-input" placeholder="Re-enter password" />
+          </div>
+
+          <div id="auth-terms-group" style="display: flex; align-items: flex-start; gap: 8px; margin: 10px 0;">
+            <input type="checkbox" id="auth-terms-checkbox" required style="margin-top: 3px;" />
+            <label for="auth-terms-checkbox" style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+              I agree to Nestera's <strong>Terms of Service</strong> &amp; <strong>Zero Brokerage Policy</strong>.
+            </label>
+          </div>
+
+          <button type="submit" id="auth-submit-btn" class="btn btn-primary"
+            style="width: 100%; padding: 12px; margin-top: 8px; font-weight: 800;">
+            Create Account
+          </button>
+
+          <div style="text-align: center; margin-top: 14px; font-size: 0.85rem; color: var(--text-muted);">
+            <span id="auth-toggle-prompt">Already have an account?</span>
+            <a href="javascript:void(0)" onclick="toggleAuthMode()" id="auth-toggle-link"
+              style="color: var(--primary); font-weight: 700; margin-left: 4px;">
+              Sign In
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 9: PROOF VAULT MODAL (MOVE-IN / MOVE-OUT HANDOVER)
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="proof-vault-modal">
+    <div class="details-modal-container" style="max-width: 780px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close-btn" onclick="closeProofVaultModal()">✕</button>
+      <div style="padding: 28px;">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">
+          Immutable Evidence Ledger
+        </span>
+        <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin: 6px 0 6px 0;">
+          Move-In / Move-Out Proof Vault
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 18px;">
+          Document room condition, appliances, and electricity/water meter readings with tamper-proof timestamps to
+          protect 100% of your security deposit.
+        </p>
+
+        <!-- Tabs -->
+        <div style="display: flex; gap: 8px; border-bottom: 1.5px solid var(--border-subtle); margin-bottom: 18px;">
+          <button id="pv-tab-movein" onclick="switchProofVaultTab('move_in')" class="btn btn-sm btn-ghost"
+            style="font-weight: 800; border-bottom: 3px solid var(--primary); border-radius: 0; color: var(--primary);">
+            🔑 Move-In Inspection (Handover)
+          </button>
+          <button id="pv-tab-moveout" onclick="switchProofVaultTab('move_out')" class="btn btn-sm btn-ghost"
+            style="font-weight: 600; border-radius: 0; color: var(--text-muted);">
+            📦 Move-Out Inspection (Exit Refund)
+          </button>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 700;" id="pv-item-counter">
+            4 Condition Items Verified
+          </span>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-sm btn-secondary"
+              onclick="showToast('Proof Vault Condition Certificate PDF exported!', 'success')">
+              📄 Export Vault PDF
+            </button>
+            <button class="btn btn-sm btn-primary" onclick="toggleAddProofItemForm()">
+              + Add Item / Meter
+            </button>
+          </div>
+        </div>
+
+        <!-- Add Form -->
+        <form id="pv-add-form" onsubmit="submitNewProofItem(event)"
+          style="display: none; background: var(--bg-surface-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 18px; margin-bottom: 18px;">
+          <h4 style="margin: 0 0 12px 0; font-size: 0.95rem; font-weight: 800;">Add Room Condition or Meter Evidence
+          </h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 700; display: block; margin-bottom: 4px;">Room /
+                Area</label>
+              <select id="pv-form-room" class="val-select" style="width: 100%;">
+                <option value="Living Room">Living Room</option>
+                <option value="Master Bedroom">Master Bedroom</option>
+                <option value="Kitchen">Kitchen</option>
+                <option value="Bathroom">Bathroom</option>
+                <option value="Utility Balcony">Utility Balcony (Meters)</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 700; display: block; margin-bottom: 4px;">Item / Appliance
+                Name</label>
+              <input type="text" id="pv-form-item" class="val-input" placeholder="e.g. Geyser 15L or Torrent Meter"
+                required />
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 700; display: block; margin-bottom: 4px;">Condition</label>
+              <select id="pv-form-condition" class="val-select" style="width: 100%;">
+                <option value="Brand New">Brand New</option>
+                <option value="Excellent">Excellent</option>
+                <option value="Good (Minor Pre-existing wear)" selected>Good (Minor Pre-existing wear)</option>
+                <option value="Defective / Requires Repair">Defective / Requires Repair</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 700; display: block; margin-bottom: 4px;">Meter Reading (If
+                applicable)</label>
+              <input type="text" id="pv-form-meter" class="val-input" placeholder="e.g. 014820 kWh" />
+            </div>
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label style="font-size: 0.8rem; font-weight: 700; display: block; margin-bottom: 4px;">Handover
+              Notes</label>
+            <input type="text" id="pv-form-notes" class="val-input"
+              placeholder="Observed with landlord during key handover..." />
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button type="button" class="btn btn-sm btn-secondary" onclick="toggleAddProofItemForm()">Cancel</button>
+            <button type="submit" class="btn btn-sm btn-primary">Lock into Vault</button>
+          </div>
+        </form>
+
+        <!-- Items List -->
+        <div id="pv-items-list" style="display: flex; flex-direction: column; gap: 12px;">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 10: ROOMMATE HOUSE CONSTITUTION MODAL (addme.md Specification)
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="roommate-contract-modal">
+    <div class="details-modal-container" style="max-width: 820px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close-btn" onclick="closeRoommateContractModal()">✕</button>
+      <div style="padding: 28px;">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">
+          Cohabitation Legal Framework
+        </span>
+        <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin: 6px 0 6px 0;">
+          Roommate Contract &amp; House Constitution
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">
+          Draft a transparent, mutual "House Constitution" to prevent flatmate misunderstandings over utility splits,
+          chore rotations, quiet study hours, and overnight visitors.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px;">
+          <!-- Form -->
+          <form onsubmit="handleGenerateRoommateConstitution(event)"
+            style="display: flex; flex-direction: column; gap: 12px;">
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;">Roommate Name /
+                Co-Signer</label>
+              <input type="text" id="rc-form-name" class="val-input" value="Aarav Sharma" required />
+            </div>
+
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <label id="rc-split-label" style="font-size: 0.82rem; font-weight: 700;">Rent Split: You (50%) |
+                  Roommate (50%)</label>
+              </div>
+              <input type="range" id="rc-form-split" min="30" max="70" value="50"
+                oninput="updateRentSplitLabel(this.value)" style="width: 100%; accent-color: var(--primary);" />
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;">Quiet Study &amp;
+                Sleeping Hours</label>
+              <select id="rc-form-quiet" class="val-select" style="width: 100%;">
+                <option value="11:00 PM – 7:00 AM (Weekdays)">11:00 PM – 7:00 AM (Weekdays)</option>
+                <option value="10:00 PM – 6:00 AM (Strict Study Zone)">10:00 PM – 6:00 AM (Strict Study Zone)</option>
+                <option value="12:00 AM – 8:00 AM (Night Owl Friendly)">12:00 AM – 8:00 AM (Night Owl Friendly)</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;">Chores &amp;
+                Cleaning Rotation</label>
+              <input type="text" id="rc-form-chores" class="val-input"
+                value="Alternating weekly kitchen and washroom cleaning" />
+            </div>
+
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;">Overnight Guest
+                Policy</label>
+              <input type="text" id="rc-form-guests" class="val-input"
+                value="Allowed with 24h advance WhatsApp notification" />
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="padding: 12px; margin-top: 6px; font-weight: 800;">
+              Generate &amp; Request Countersignatures →
+            </button>
+          </form>
+
+          <!-- Live Document Preview -->
+          <div class="constitution-preview-paper" id="rc-preview-box">
+            <div
+              style="border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px; margin-bottom: 12px; font-weight: 800; text-align: center;">
+              HOUSE CONSTITUTION v1.0 (PROVISIONAL)
+            </div>
+            <p><strong>Property:</strong> Sunrise Harmony Heights (Flat 402)</p>
+            <p><strong>Parties:</strong> <span id="rc-prev-user-name">Resident</span> &amp; <span id="rc-prev-name">Aarav Sharma</span></p>
+            <p><strong>1. Rent Allocation:</strong> <span id="rc-prev-rent">₹9,000 (50%) / ₹9,000 (50%)</span> due on
+              5th of each month.</p>
+            <p><strong>2. Utility Protocol:</strong> Torrent Power &amp; Wi-Fi split 50/50 via Nestera.</p>
+            <p><strong>3. Cleaning Roster:</strong> <span id="rc-prev-chores">Alternating weekly cleaning.</span></p>
+            <p><strong>4. Study &amp; Quiet Hours:</strong> <span id="rc-prev-quiet">11:00 PM – 7:00 AM.</span></p>
+            <p><strong>5. Visitors &amp; Guests:</strong> <span id="rc-prev-guests">Allowed with 24h WhatsApp
+                notification.</span></p>
+
+            <div
+              style="border-top: 1px dashed var(--border-subtle); padding-top: 12px; margin-top: 16px; display: flex; justify-content: space-between;">
+              <div>
+                <span style="color: var(--accent-emerald-dark); font-weight: 800;">✓ <span id="rc-prev-user-sign">Resident</span> (Signed)</span>
+                <div style="font-size: 0.72rem; color: var(--text-muted);">Aadhaar Stamped</div>
+              </div>
+              <div>
+                <span id="rc-prev-status" style="color: var(--accent-amber); font-weight: 800;">⏳ Aarav Sharma</span>
+                <div style="font-size: 0.72rem; color: var(--text-muted);">Invite Pending</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 11: UTILITY OCR VERIFICATION MODAL (addme.md Specification)
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="utility-verification-modal">
+    <div class="details-modal-container" style="max-width: 620px;">
+      <button class="modal-close-btn" onclick="closeUtilityVerificationModal()">✕</button>
+      <div style="padding: 28px;">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">
+          Owner Trust &amp; Fraud Prevention
+        </span>
+        <h2 style="font-size: 1.55rem; font-weight: 800; color: var(--text-primary); margin: 6px 0 6px 0;">
+          Utility &amp; Property Document OCR Verification
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">
+          To protect students from fake or duplicate listings, upload a recent utility bill or municipal property tax
+          receipt. Our automated OCR verifies owner identity and service address.
+        </p>
+
+        <div id="ocr-upload-step">
+          <div class="val-form-group" style="margin-bottom: 14px;">
+            <label>Document Type</label>
+            <select id="ocr-doc-type" class="val-select" style="width: 100%;">
+              <option value="Torrent Power Electricity Bill">Torrent Power Electricity Bill (Recent 60 Days)</option>
+              <option value="AMC Property Tax Receipt">Ahmedabad Municipal Corporation (AMC) Tax Receipt</option>
+              <option value="Adani Piped Gas Bill">Adani Piped Natural Gas Bill</option>
+              <option value="Registered Sale Deed">Registered Property Sale Deed / Allotment Letter</option>
+            </select>
+          </div>
+
+          <div onclick="triggerOcrFileSelect()"
+            style="border: 2px dashed var(--primary); background: var(--bg-surface-secondary); border-radius: var(--radius-md); padding: 30px; text-align: center; cursor: pointer; margin-bottom: 16px;">
+            <input type="file" id="ocr-file-input" style="display: none;" onchange="handleOcrFileSelected(this)"
+              accept=".pdf,.png,.jpg,.jpeg" />
+            <span style="font-size: 2.5rem; display: block; margin-bottom: 6px;">📄</span>
+            <div id="ocr-file-label" style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">
+              Click to browse or drop electricity bill PDF
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">
+              Supports PDF, JPG, PNG up to 10MB (Kept strictly private &amp; encrypted)
+            </div>
+          </div>
+
+          <button id="ocr-run-btn" class="btn btn-primary" onclick="runDocumentOcrVerification()"
+            style="width: 100%; padding: 12px; font-weight: 800;">
+            Extract Fields &amp; Verify Listing →
+          </button>
+        </div>
+
+        <div id="ocr-result-step" style="display: none;">
+          <div
+            style="background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: var(--radius-md); padding: 16px; display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <span style="font-size: 2rem;">🎉</span>
+            <div>
+              <h4 style="margin: 0; color: #065F46; font-size: 1.05rem; font-weight: 800;">
+                Listing Verified via OCR (96.8% Confidence)
+              </h4>
+              <p style="margin: 2px 0 0 0; font-size: 0.85rem; color: #047857;">
+                Service address &amp; consumer record matches municipal property database.
+              </p>
+            </div>
+          </div>
+
+          <div
+            style="border: 1.5px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px; background: var(--bg-surface); margin-bottom: 18px;">
+            <h4 style="margin: 0 0 10px 0; font-size: 0.95rem; font-weight: 800;">OCR Extracted Metadata</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.82rem;">
+              <div><strong>Consumer No:</strong> TP-9982410-AHM</div>
+              <div><strong>Billed Owner:</strong> Rajesh Patel</div>
+              <div style="grid-column: span 2;"><strong>Service Address:</strong> Flat 402, Sunrise Harmony Heights, SG
+                Highway, Ahmedabad</div>
+              <div><strong>Billing Cycle:</strong> August 2026</div>
+              <div><strong>Status:</strong> <span style="color: var(--accent-emerald-dark); font-weight: 800;">VERIFIED
+                  ✓</span></div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" onclick="closeUtilityVerificationModal()" style="width: 100%; padding: 12px;">
+            Done — Return to Host Hub
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 12: STRIPE SECURE ESCROW PAYMENT MODAL
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="stripe-payment-modal">
+    <div class="details-modal-container" style="max-width: 480px;">
+      <button class="modal-close-btn" onclick="closeStripePaymentModal()">✕</button>
+      <div style="padding: 28px;">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">
+          Stripe Secure Escrow
+        </span>
+        <h2 style="font-size: 1.55rem; font-weight: 800; color: var(--text-primary); margin: 6px 0 6px 0;">
+          Rent &amp; Tenancy Payment
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 18px;">
+          Due Date: <strong>Oct 5, 2026</strong> • Landlord: <strong>Rajesh Patel</strong>
+        </p>
+
+        <div id="stripe-checkout-step">
+          <!-- Itemized Breakdown -->
+          <div
+            style="background: var(--bg-surface-secondary); border: 1.5px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 8px;">
+              <span>Base Monthly Rent</span>
+              <span>₹16,500</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 8px;">
+              <span>Society Maintenance &amp; Elevators</span>
+              <span>₹1,200</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 8px;">
+              <span>Water &amp; Sewage Cess</span>
+              <span>₹300</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 12px;">
+              <span>Nestera Platform Fee</span>
+              <span style="color: var(--accent-emerald-dark); font-weight: 700;">₹0 (Zero Brokerage)</span>
+            </div>
+            <div
+              style="border-top: 1.5px solid var(--border-medium); padding-top: 10px; display: flex; justify-content: space-between; font-weight: 800; font-size: 1.1rem;">
+              <span>Total Due</span>
+              <span style="color: var(--primary);">₹18,000</span>
+            </div>
+          </div>
+
+          <button id="stripe-pay-btn" class="btn btn-primary" onclick="executeStripeCheckout()"
+            style="width: 100%; padding: 14px; font-weight: 800; font-size: 1rem; margin-bottom: 10px;">
+            Pay ₹18,000 with Stripe Checkout →
+          </button>
+          <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted);">
+            🔒 256-bit SSL encrypted • Escrow protected • Credit/Debit Cards, UPI, NetBanking
+          </div>
+        </div>
+
+        <div id="stripe-success-step" style="display: none; text-align: center; padding: 16px 0;">
+          <span style="font-size: 3.5rem;">✅</span>
+          <h3 style="font-size: 1.35rem; font-weight: 800; margin: 12px 0 6px 0;">Payment Confirmed!</h3>
+          <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 20px;">
+            ₹18,000 received. Landlord Rajesh Patel notified in real time.
+          </p>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-secondary" style="flex: 1;"
+              onclick="showToast('GST Rent Receipt PDF downloaded!', 'success')">
+              📥 Download Receipt
+            </button>
+            <button class="btn btn-primary" style="flex: 1;" onclick="closeStripePaymentModal()">
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 13: ACCOMMODATION CHECKOUT & SHORT-STAY BOOKING FLOW (Section 7)
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="checkout-modal">
+    <div class="details-modal-container" style="max-width: 640px; max-height: 92vh; overflow-y: auto;">
+      <button class="modal-close-btn" onclick="closeAccommodationCheckoutModal()">✕</button>
+      <div style="padding: 28px;">
+        <!-- Header & Step Indicator -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+          <div>
+            <span id="chk-eyebrow" style="font-size: 0.78rem; font-weight: 800; color: var(--primary); text-transform: uppercase;">
+              Accommodation Booking • Step 1 of 6
+            </span>
+            <h2 id="chk-step-title" style="font-size: 1.45rem; font-weight: 800; color: var(--text-primary); margin: 4px 0 0;">
+              1. Property Summary
+            </h2>
+          </div>
+        </div>
+
+        <!-- Progress Track -->
+        <div style="height: 4px; background: var(--border-subtle); border-radius: 2px; margin-bottom: 22px; overflow: hidden;">
+          <div id="chk-progress-bar" style="height: 100%; width: 16.66%; background: var(--primary); transition: width 0.3s ease;"></div>
+        </div>
+
+        <!-- STEP 1: PROPERTY SUMMARY -->
+        <div id="chk-step-1">
+          <div style="border-radius: 12px; overflow: hidden; height: 180px; margin-bottom: 16px;">
+            <img id="chk-prop-img" src="" alt="Property" style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+            <div>
+              <span class="badge badge-verified" style="margin-bottom: 6px;">✓ Verified Space &amp; Ownership</span>
+              <h3 id="chk-prop-title" style="font-size: 1.25rem; font-weight: 800;">Modern Apartment</h3>
+              <p id="chk-prop-locality" style="color: var(--text-secondary); font-size: 0.88rem; margin: 4px 0 0;">Locality, Ahmedabad</p>
+            </div>
+            <div style="text-align: right;">
+              <div id="chk-prop-rent" style="font-size: 1.35rem; font-weight: 800; color: var(--primary);">₹18,000/mo</div>
+              <div style="font-size: 0.78rem; color: var(--accent-emerald-dark); font-weight: 700;">Zero Brokerage</div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: var(--bg-surface-secondary); padding: 12px; border-radius: 10px; margin-bottom: 20px;">
+            <div>
+              <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Type</span>
+              <strong id="chk-prop-type" style="font-size: 0.88rem;">2BHK</strong>
+            </div>
+            <div>
+              <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Area</span>
+              <strong id="chk-prop-area" style="font-size: 0.88rem;">950 sq.ft</strong>
+            </div>
+            <div>
+              <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Furnishing</span>
+              <strong id="chk-prop-furnishing" style="font-size: 0.88rem;">Fully Furnished</strong>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 24px;">
+            <button class="btn btn-primary" style="flex: 1;" onclick="goToCheckoutStep(2)">
+              Continue to Rental Dates →
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: RENTAL DURATION & DATES -->
+        <div id="chk-step-2" style="display: none;">
+          <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px;">
+            Nestera short stay short-term accommodation supports 2–4 month flexible student and youth rentals.
+          </p>
+
+          <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 8px;">
+            Select Stay Duration (2–4 Months Window Supported)
+          </label>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">
+            <button type="button" class="btn btn-outline chk-duration-btn active" id="chk-dur-2" onclick="setCheckoutDuration(2)" style="padding: 12px; text-align: center;">
+              <strong style="display: block; font-size: 1.1rem;">2 Months</strong>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Short Stay</span>
+            </button>
+            <button type="button" class="btn btn-outline chk-duration-btn" id="chk-dur-3" onclick="setCheckoutDuration(3)" style="padding: 12px; text-align: center;">
+              <strong style="display: block; font-size: 1.1rem;">3 Months</strong>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Semester</span>
+            </button>
+            <button type="button" class="btn btn-outline chk-duration-btn" id="chk-dur-4" onclick="setCheckoutDuration(4)" style="padding: 12px; text-align: center;">
+              <strong style="display: block; font-size: 1.1rem;">4 Months</strong>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Internship</span>
+            </button>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
+            <div class="val-form-group">
+              <label>Move-In Date</label>
+              <input type="date" class="val-input" id="chk-move-in-date" value="2026-10-01" onchange="updateCheckoutDates()" />
+            </div>
+            <div class="val-form-group">
+              <label>Calculated Move-Out</label>
+              <input type="date" class="val-input" id="chk-move-out-date" readonly style="background: var(--bg-surface-secondary);" />
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 24px;">
+            <button class="btn btn-secondary" onclick="goToCheckoutStep(1)">← Back</button>
+            <button class="btn btn-primary" style="flex: 1;" onclick="goToCheckoutStep(3)">
+              Review Price Breakdown →
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: TRANSPARENT PRICE BREAKDOWN -->
+        <div id="chk-step-3" style="display: none;">
+          <div style="background: var(--bg-surface-secondary); border: 1.5px solid var(--border-medium); border-radius: 12px; padding: 16px; margin-bottom: 18px;">
+            <div style="font-size: 0.85rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase;">
+              Monthly Recurring Expenses
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px;">
+              <span style="color: var(--text-secondary);">Monthly Base Rent</span>
+              <strong id="chk-break-rent">₹18,000</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px;">
+              <span style="color: var(--text-secondary);">Society Maintenance</span>
+              <strong id="chk-break-maint">₹1,200</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px;">
+              <span style="color: var(--text-secondary);">Estimated Utilities (Torrent Power &amp; Water)</span>
+              <strong id="chk-break-util">₹2,500</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 10px; color: var(--accent-emerald-dark);">
+              <span>Nestera Platform Fee</span>
+              <strong>₹0 (Zero Brokerage Guarantee)</strong>
+            </div>
+            <div style="border-top: 1px solid var(--border-medium); paddingTop: 10px; display: flex; justify-content: space-between; font-size: 1rem; font-weight: 800;">
+              <span>Total Monthly Living Cost</span>
+              <span id="chk-break-monthly-total" style="color: var(--primary);">₹21,700/mo</span>
+            </div>
+          </div>
+
+          <!-- Refundable Security Deposit Clearly Separated -->
+          <div style="background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 12px; padding: 16px; margin-bottom: 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-weight: 800; color: #065F46; font-size: 0.95rem;">
+                🔒 Refundable Security Deposit
+              </span>
+              <span id="chk-break-deposit" style="font-weight: 800; color: #065F46; font-size: 1.1rem;">
+                ₹36,000
+              </span>
+            </div>
+            <p style="font-size: 0.8rem; color: #047857; margin: 0; line-height: 1.4;">
+              <strong>Important:</strong> This deposit is 100% refundable within 7 business days of checkout. It is held securely in escrow and is NOT a monthly fee.
+            </p>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #EEF2FF; border-radius: 10px; margin-bottom: 20px;">
+            <span style="font-size: 0.95rem; font-weight: 800; color: var(--primary);">Total Due Today (1st Mo + Deposit):</span>
+            <span id="chk-break-due-today" style="font-size: 1.3rem; font-weight: 900; color: var(--primary);">₹54,000</span>
+          </div>
+
+          <div style="display: flex; gap: 12px;">
+            <button class="btn btn-secondary" onclick="goToCheckoutStep(2)">← Back</button>
+            <button class="btn btn-primary" style="flex: 1;" onclick="goToCheckoutStep(4)">
+              Inspect True Cost of Living →
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 4: TRUE COST OF LIVING -->
+        <div id="chk-step-4" style="display: none;">
+          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 16px;">
+            Nestera estimates your true out-of-pocket budget based on local Ahmedabad transit and living averages:
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; padding: 12px 16px; background: var(--bg-surface-secondary); border-radius: 10px; border: 1px solid var(--border-subtle);">
+              <div>
+                <strong style="font-size: 0.92rem;">Monthly Rent + Maintenance</strong>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Fixed accommodation base</div>
+              </div>
+              <div id="chk-true-rent-maint" style="font-size: 1rem; font-weight: 800;">₹19,200</div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; padding: 12px 16px; background: var(--bg-surface-secondary); border-radius: 10px; border: 1px solid var(--border-subtle);">
+              <div>
+                <strong style="font-size: 0.92rem;">Estimated Commute (BRTS / Metro / Shuttle)</strong>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Average transit to Nirma/CEPT/GIFT City</div>
+              </div>
+              <div id="chk-true-commute" style="font-size: 1rem; font-weight: 800;">₹1,200</div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; padding: 12px 16px; background: var(--bg-surface-secondary); border-radius: 10px; border: 1px solid var(--border-subtle);">
+              <div>
+                <strong style="font-size: 0.92rem;">Estimated Cook / Food &amp; Essentials</strong>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Average student/young professional share</div>
+              </div>
+              <div id="chk-true-groceries" style="font-size: 1rem; font-weight: 800;">₹2,500</div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; padding: 14px 18px; background: #F0FDF4; border-radius: 10px; border: 1.5px solid #86EFAC;">
+              <div>
+                <strong style="font-size: 1rem; color: #166534;">Estimated True Monthly Cost</strong>
+                <div style="font-size: 0.75rem; color: #15803D;">Total realistic out-of-pocket projection</div>
+              </div>
+              <div id="chk-true-total" style="font-size: 1.25rem; fontWeight: 900; color: #166534;">₹22,900/mo</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px;">
+            <button class="btn btn-secondary" onclick="goToCheckoutStep(3)">← Back</button>
+            <button class="btn btn-primary" style="flex: 1;" onclick="goToCheckoutStep(5)">
+              Proceed to Tenant Details →
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 5: TENANT DETAILS & PAYMENT -->
+        <div id="chk-step-5" style="display: none;">
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+            <div class="val-form-group">
+              <label>Full Legal Name</label>
+              <input type="text" class="val-input" id="chk-tenant-name" required />
+            </div>
+
+            <div class="val-form-group">
+              <label>Email Address</label>
+              <input type="email" class="val-input" id="chk-tenant-email" required />
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="val-form-group">
+                <label>Phone Number</label>
+                <input type="tel" class="val-input" id="chk-tenant-phone" value="+91 98250 12345" required />
+              </div>
+              <div class="val-form-group">
+                <label>Aadhaar / ID Ending</label>
+                <input type="text" class="val-input" id="chk-tenant-aadhaar" value="•••• •••• 8841" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Escrow Summary -->
+          <div style="background: var(--bg-surface-secondary); border: 1.5px solid var(--border-medium); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span style="color: var(--text-secondary); font-size: 0.88rem;">1st Month Rent:</span>
+              <span id="chk-pay-rent" style="font-weight: 700;">₹18,000</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span style="color: var(--text-secondary); font-size: 0.88rem;">Refundable Security Deposit:</span>
+              <span id="chk-pay-deposit" style="font-weight: 700;">₹36,000</span>
+            </div>
+            <div style="border-top: 1px solid var(--border-medium); paddingTop: 8px; display: flex; justify-content: space-between;">
+              <strong style="font-size: 1.05rem;">Amount Charged to Stripe Escrow:</strong>
+              <strong id="chk-pay-total" style="font-size: 1.2rem; color: var(--primary);">₹54,000</strong>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin: 8px 0 0;">
+              🔒 Processed securely by Stripe AES-256 compliant servers. Nestera never stores your payment card credentials.
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 12px;">
+            <button class="btn btn-secondary" onclick="goToCheckoutStep(4)">← Back</button>
+            <button id="chk-pay-btn" class="btn btn-primary" style="flex: 1; padding: 12px;" onclick="executeAccommodationCheckout()">
+              Pay via Stripe Checkout →
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 6: CONFIRMATION & RECEIPT -->
+        <div id="chk-step-6" style="display: none; text-align: center; padding: 10px 0;">
+          <div style="font-size: 3rem; margin-bottom: 10px;">🎉</div>
+          <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 4px;">
+            Accommodation Booked!
+          </h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">
+            Your reservation is locked with 0% brokerage and verified on Supabase.
+          </p>
+
+          <div style="background: var(--bg-surface-secondary); border: 1.5px dashed var(--border-medium); border-radius: 12px; padding: 20px; text-align: left; margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span style="color: var(--text-muted); font-size: 0.82rem;">Receipt Number:</span>
+              <span id="chk-rec-num" style="font-weight: 800; font-size: 0.88rem;">REC-NEST-849102</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span style="color: var(--text-muted); font-size: 0.82rem;">Stripe Transaction ID:</span>
+              <span id="chk-rec-txn" style="font-family: monospace; font-size: 0.82rem; color: var(--primary);">txn_stripe_demo</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span style="color: var(--text-muted); font-size: 0.82rem;">Tenant Name:</span>
+              <span id="chk-rec-name" style="font-weight: 700; font-size: 0.88rem;">Resident</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span style="color: var(--text-muted); font-size: 0.82rem;">Property:</span>
+              <span id="chk-rec-prop" style="font-weight: 700; font-size: 0.88rem;">Apartment</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span style="color: var(--text-muted); font-size: 0.82rem;">Rental Window:</span>
+              <span id="chk-rec-dates" style="font-weight: 700; font-size: 0.88rem;">Oct 1, 2026 – Dec 31, 2026 (3 Mo)</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 8px;">
+              <span style="font-weight: 800;">Amount Deposited in Escrow:</span>
+              <span id="chk-rec-amount" style="font-weight: 900; color: var(--accent-emerald-dark); font-size: 1.05rem;">₹54,000</span>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px;">
+            <button class="btn btn-secondary" style="flex: 1;" onclick="window.print()">
+              🖨️ Print Receipt
+            </button>
+            <button class="btn btn-primary" style="flex: 1;" onclick="closeAccommodationCheckoutModal()">
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 14: OWNER STATUS CHANGE CONFIRMATION MODAL
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="owner-status-confirm-modal">
+    <div class="details-modal-container" style="max-width: 440px; padding: 24px;">
+      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 10px;">Confirm Availability Change</h3>
+      <p id="owner-confirm-msg" style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px;">
+        Are you sure you want to change this listing status?
+      </p>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-secondary" style="flex: 1;" onclick="closeOwnerStatusConfirmModal()">Cancel</button>
+        <button class="btn btn-primary" style="flex: 1;" onclick="executeOwnerStatusChange()">Confirm Update</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 15: OWNER EDIT PROPERTY MODAL
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="owner-edit-property-modal">
+    <div class="details-modal-container" style="max-width: 500px; padding: 28px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 1.3rem; font-weight: 800; margin: 0;">Edit Property Details</h3>
+        <button class="modal-close-btn" onclick="closeOwnerEditPropertyModal()">✕</button>
+      </div>
+      <form onsubmit="handleSavePropertyEdit(event)" style="display: flex; flex-direction: column; gap: 14px;">
+        <input type="hidden" id="edit-prop-id" />
+        <div class="val-form-group">
+          <label>Listing Title</label>
+          <input type="text" class="val-input" id="edit-prop-title" required />
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="val-form-group">
+            <label>Monthly Rent (₹)</label>
+            <input type="number" class="val-input" id="edit-prop-rent" required />
+          </div>
+          <div class="val-form-group">
+            <label>Security Deposit (₹)</label>
+            <input type="number" class="val-input" id="edit-prop-deposit" required />
+          </div>
+        </div>
+        <div class="val-form-group">
+          <label>Locality &amp; Address</label>
+          <input type="text" class="val-input" id="edit-prop-locality" required />
+        </div>
+        <div class="val-form-group">
+          <label>Listing Status</label>
+          <select class="val-select" id="edit-prop-status">
+            <option value="Active">🟢 Active (Open to Applications)</option>
+            <option value="Found">🔒 Found (Reserved/Hidden)</option>
+            <option value="Occupied">🏢 Occupied</option>
+            <option value="Inactive">⏸️ Inactive</option>
+          </select>
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 12px;">
+          <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeOwnerEditPropertyModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Save to Supabase</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 18: OWNER MAINTENANCE TICKET DETAIL & RESOLUTION MODAL
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="owner-ticket-detail-modal" style="z-index: 10000;">
+    <div class="details-modal-container" style="max-width: 680px; padding: 28px; border-radius: 20px;">
+      <button class="modal-close-btn" onclick="closeOwnerTicketDetailModal()" aria-label="Close modal">✕</button>
+
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--border-subtle); flex-wrap:wrap; gap:10px;">
+        <div>
+          <div style="display:flex; gap:8px; align-items:center; margin-bottom:6px;">
+            <span class="badge badge-primary" id="modal-ticket-id">maint-101</span>
+            <span class="badge" id="modal-ticket-urgency">HIGH PRIORITY</span>
+            <span class="badge badge-verified" id="modal-ticket-status">In Progress</span>
+          </div>
+          <h2 style="font-size:1.4rem; font-weight:800; margin:0;" id="modal-ticket-title">Geyser leaking</h2>
+        </div>
+        <span style="font-size:0.8rem; color:var(--text-muted);" id="modal-ticket-time">Reported 2h ago</span>
+      </div>
+
+      <!-- Tenant & Property Card -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px; background:var(--bg-surface-secondary); padding:14px; border-radius:12px;">
+        <div>
+          <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Tenant</span>
+          <div style="font-weight:700; font-size:0.95rem; margin-top:2px;" id="modal-ticket-tenant">Aman Singh</div>
+          <div style="font-size:0.8rem; color:var(--text-secondary);" id="modal-ticket-tenant-contact">+91 98765 43210</div>
+        </div>
+        <div>
+          <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Property &amp; Unit</span>
+          <div style="font-weight:700; font-size:0.95rem; margin-top:2px;" id="modal-ticket-prop">Palm Grove Luxury Living</div>
+          <div style="font-size:0.8rem; color:var(--text-secondary);" id="modal-ticket-location">Flat 402 • SG Highway</div>
+        </div>
+      </div>
+
+      <!-- Description & Category -->
+      <div style="margin-bottom:18px;">
+        <div style="font-size:0.8rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px;">Issue Description</div>
+        <p style="font-size:0.9rem; color:var(--text-primary); line-height:1.6; background:var(--bg-surface); padding:12px 14px; border-radius:10px; border:1px solid var(--border-subtle); margin:0;" id="modal-ticket-desc">
+          Geyser inlet joint is leaking water continuously into the drainage pipe. Requires pipe seal replacement.
+        </p>
+      </div>
+
+      <!-- Attached Photos / Proof Vault -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:0.8rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px;">Attached Inspection Evidence</div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <img id="modal-ticket-photo" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=400&q=80" alt="Evidence" style="width:110px; height:80px; object-fit:cover; border-radius:8px; border:1px solid var(--border-medium); cursor:pointer;" onclick="showToast('Opened high-resolution photo evidence')" />
+          <div style="font-size:0.8rem; color:var(--text-muted);">
+            <div>✓ Time-stamped camera upload</div>
+            <div>✓ Linked to Move-In Proof Vault item</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technician Assignment -->
+      <div style="background:#F0FDF4; border:1px solid #BBF7D0; padding:12px 16px; border-radius:12px; margin-bottom:22px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <span style="font-size:0.75rem; font-weight:800; color:#166534; text-transform:uppercase;">Assigned Certified Technician</span>
+          <div style="font-weight:800; color:#14532D; font-size:0.95rem; margin-top:2px;" id="modal-ticket-tech">Ramesh Kumar (Certified Plumber &amp; Electrician)</div>
+          <div style="font-size:0.8rem; color:#15803D;">48-Hour Service Level Agreement (SLA) Active</div>
+        </div>
+        <button class="btn btn-sm btn-secondary" onclick="showToast('Technician WhatsApp dispatch window triggered!')">💬 Contact Pro</button>
+      </div>
+
+      <!-- Owner Status Progression Action Buttons -->
+      <div>
+        <div style="font-size:0.8rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:8px;">Update Ticket Resolution Status</div>
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px;">
+          <button class="btn btn-sm btn-secondary" id="modal-btn-ack" onclick="handleOwnerUpdateCurrentTicket('Acknowledged')">
+            1. Acknowledge
+          </button>
+          <button class="btn btn-sm btn-outline" id="modal-btn-prog" onclick="handleOwnerUpdateCurrentTicket('In Progress')">
+            2. In Progress
+          </button>
+          <button class="btn btn-sm btn-primary" id="modal-btn-resolve" onclick="handleOwnerUpdateCurrentTicket('Resolved')">
+            3. ✓ Mark Resolved
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       WHATSAPP / IN-APP 24/7 MAINTENANCE RELAY BOT WIDGET
+       ========================================================================== -->
+  <button class="nestora-bot-launcher" id="nestora-bot-launcher" onclick="toggleMaintenanceChat()">
+    <span style="font-size: 1.3rem;">💬</span>
+    <span>Maintenance Bot (24/7)</span>
+  </button>
+
+  <div class="nestora-bot-window" id="nestora-bot-window" style="display: none;">
+    <div class="nestora-bot-header">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="width: 9px; height: 9px; border-radius: 50%; background: #25D366;"></div>
+        <div>
+          <h4 style="margin: 0; font-size: 0.95rem; font-weight: 800; color: white;">Nestera Relay Bot</h4>
+          <div style="font-size: 0.7rem; opacity: 0.85;">WhatsApp &amp; In-App Sync Active</div>
+        </div>
+      </div>
+      <button onclick="toggleMaintenanceChat(false)"
+        style="background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer;">✕</button>
+    </div>
+
+    <div class="nestora-bot-messages" id="nestora-bot-messages-box">
+      <div class="nestora-msg-bubble nestora-msg-bot" id="nestora-bot-welcome-bubble">
+        👋 Greetings! I am the Nestera Maintenance Relay Bot. Type any repair issue (e.g. "geyser leaking", "ac not
+        cooling") to dispatch a technician immediately.
+      </div>
+    </div>
+
+    <form onsubmit="handleSendMaintenanceChat(event)"
+      style="padding: 10px; background: #F0F2F5; display: flex; gap: 8px; align-items: center;">
+      <input type="text" id="nestora-bot-input" placeholder="Type issue (e.g. geyser leaking)..."
+        style="flex: 1; padding: 10px 14px; border: 1px solid var(--border-medium); border-radius: 24px; font-size: 0.85rem; outline: none;" />
+      <button type="submit"
+        style="background: #128C7E; color: white; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.95rem;">
+        ➤
+      </button>
+    </form>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 19: ROOMMATE COMPATIBILITY QUIZ (7 Steps + Review)
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="roommate-quiz-modal">
+    <div class="details-modal-container quiz-modal-container">
+      <button class="modal-close-btn" onclick="closeCompatibilityQuiz()">✕</button>
+
+      <!-- Quiz Header with Stepper Progress -->
+      <div class="quiz-modal-header">
+        <span class="quiz-step-tag" id="quiz-step-indicator">Step 1 of 7 • Food &amp; Dining</span>
+        <h2 class="quiz-step-heading" id="quiz-step-title">Food &amp; Dining Preferences</h2>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill" id="quiz-progress-fill" style="width: 14%;"></div>
+        </div>
+      </div>
+
+      <!-- Quiz Modal Body -->
+      <div class="quiz-modal-body" id="quiz-modal-body">
+
+        <!-- STEP 1: FOOD & DINING (Q1, Q2, Q5) -->
+        <div class="quiz-step-panel" id="quiz-step-1">
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q1. What are your food preferences?</label>
+            <div class="quiz-question-hint">Select the dietary habit that best describes your daily lifestyle.</div>
+            <div class="quiz-options-grid" data-field="food_preference">
+              <div class="quiz-option-card" onclick="selectQuizOption('food_preference', 'Pure Vegetarian', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🥗 Pure Vegetarian</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('food_preference', 'Non Vegetarian', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🍗 Non Vegetarian</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('food_preference', 'Eggitarian', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🍳 Eggitarian</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('food_preference', 'Pure Jain', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🌱 Pure Jain</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q2. Do you have any objection if your roommate has different food preferences?</label>
+            <div class="quiz-question-hint">Choose 'No' for flexible living arrangements, or 'Yes' if you require matching diets.</div>
+            <div class="quiz-options-grid" data-field="food_preference_flexibility">
+              <div class="quiz-option-card" onclick="selectQuizOption('food_preference_flexibility', 'No', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🟢 No (More flexible)</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('food_preference_flexibility', 'Yes', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🔴 Yes (Strict about matching)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q5. How much do you order food from outside or eat out?</label>
+            <div class="quiz-options-grid" data-field="eating_out_frequency">
+              <div class="quiz-option-card" onclick="selectQuizOption('eating_out_frequency', 'Very frequently', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🥡 Very frequently</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('eating_out_frequency', 'Occasionally', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🍲 Occasionally</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('eating_out_frequency', 'Once in a blue moon', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🏡 Once in a blue moon</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('eating_out_frequency', 'Depends on your mood', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">✨ Depends on your mood</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: HABITS (Q3, Q4) -->
+        <div class="quiz-step-panel" id="quiz-step-2" style="display:none;">
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q3. How much do you smoke?</label>
+            <div class="quiz-question-hint">Helps ensure mutual comfort regarding indoor/balcony air quality.</div>
+            <div class="quiz-options-grid" data-field="smoking_frequency">
+              <div class="quiz-option-card" onclick="selectQuizOption('smoking_frequency', 'Not at all', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🚭 Not at all</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('smoking_frequency', 'Occasionally', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🍃 Occasionally</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('smoking_frequency', 'Often', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🚬 Often</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('smoking_frequency', 'Regularly', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">💨 Regularly</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q4. How much do you drink?</label>
+            <div class="quiz-options-grid" data-field="drinking_frequency">
+              <div class="quiz-option-card" onclick="selectQuizOption('drinking_frequency', 'Not at all', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🥤 Not at all</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('drinking_frequency', 'Occasionally', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🥂 Occasionally (Social only)</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('drinking_frequency', 'Often', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🍺 Often</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('drinking_frequency', 'Regularly', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🍷 Regularly</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: FINANCES (Q6) -->
+        <div class="quiz-step-panel" id="quiz-step-3" style="display:none;">
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q6. What is your monthly budget?</label>
+            <div class="quiz-question-hint">Calibrate your preferred maximum monthly rent share (₹0 – ₹20,000).</div>
+
+            <div class="quiz-budget-box">
+              <div class="quiz-budget-val-display" id="quiz-budget-display">Monthly Budget: ₹12,000</div>
+              <div class="quiz-budget-sub">Slide to adjust your monthly room budget target</div>
+
+              <input type="range" class="quiz-range-slider" id="quiz-budget-slider" min="0" max="20000" step="500" value="12000" oninput="handleQuizBudgetInput(this.value)" />
+
+              <div class="quiz-slider-scale">
+                <span>₹0 (Minimal)</span>
+                <span>₹10,000 (Median)</span>
+                <span>₹20,000 (Premium)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 4: PERSONALITY & WORK (Q7, Q8, Q9, Q10, Q11) -->
+        <div class="quiz-step-panel" id="quiz-step-4" style="display:none;">
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q7. What type of person are you?</label>
+            <div class="quiz-options-grid" data-field="personality_type">
+              <div class="quiz-option-card" onclick="selectQuizOption('personality_type', 'Extrovert', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🎉 Extrovert</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('personality_type', 'Ambivert', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">⚖️ Ambivert</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('personality_type', 'Introvert', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🧘 Introvert</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q8. What is your relationship status?</label>
+            <div class="quiz-options-grid" data-field="relationship_status">
+              <div class="quiz-option-card" onclick="selectQuizOption('relationship_status', 'Single', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">👤 Single</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('relationship_status', 'Committed', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">💑 Committed</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q9. What kind of relationship do you want with your roommate?</label>
+            <div class="quiz-options-grid" data-field="roommate_relationship_preference">
+              <div class="quiz-option-card" onclick="selectQuizOption('roommate_relationship_preference', 'Very close friends', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🤝 Very close friends</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('roommate_relationship_preference', 'Friendly and social', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">☕ Friendly and social</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('roommate_relationship_preference', 'Friendly but independent', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">📚 Friendly but independent</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('roommate_relationship_preference', 'Mostly just roommates', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🚪 Mostly just roommates</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q10. Which would bother you the MOST in a roommate?</label>
+            <div class="quiz-options-grid" data-field="biggest_roommate_concern">
+              <div class="quiz-option-card" onclick="selectQuizOption('biggest_roommate_concern', 'Poor cleanliness', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🧹 Poor cleanliness</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('biggest_roommate_concern', 'Excessive noise', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🔊 Excessive noise</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('biggest_roommate_concern', 'Lack of privacy', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🔒 Lack of privacy</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('biggest_roommate_concern', 'Dominating in nature', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🗣️ Dominating in nature</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q11. Where would you prefer to study/work most of the time?</label>
+            <div class="quiz-options-grid" data-field="study_location_preference">
+              <div class="quiz-option-card" onclick="selectQuizOption('study_location_preference', 'In the room', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">💻 In the room</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('study_location_preference', 'Library', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">📖 Library</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('study_location_preference', 'Other campus spaces', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🏫 Other campus spaces</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('study_location_preference', 'Depends on the day', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🔄 Depends on the day</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 5: SLEEP & ENVIRONMENT (Q12, Q13) -->
+        <div class="quiz-step-panel" id="quiz-step-5" style="display:none;">
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q12. What time do you usually sleep on college/work days?</label>
+            <div class="quiz-options-grid" data-field="sleep_schedule">
+              <div class="quiz-option-card" onclick="selectQuizOption('sleep_schedule', 'Before 11 PM', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🌅 Before 11 PM (Early Riser)</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('sleep_schedule', '11 PM–12 AM', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🌙 11 PM–12 AM (Regular)</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('sleep_schedule', '12–1 AM', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🦉 12–1 AM (Night Owl)</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('sleep_schedule', 'After 1 AM', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🌌 After 1 AM (Late Owl)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q13. How do your surroundings affect your sleep?</label>
+            <div class="quiz-options-grid" data-field="sleep_environment_preference">
+              <div class="quiz-option-card" onclick="selectQuizOption('sleep_environment_preference', 'I want a completely quiet environment.', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🤫 I want a completely quiet environment.</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('sleep_environment_preference', 'A little bit of noise is fine.', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">📻 A little bit of noise is fine.</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('sleep_environment_preference', 'I really don\'t care about my surroundings.', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">😴 I really don't care about my surroundings.</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('sleep_environment_preference', 'Depends on the time of the day.', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">⏰ Depends on the time of the day.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 6: ROOMMATE PREFERENCES (Q14, Q15, Q16) -->
+        <div class="quiz-step-panel" id="quiz-step-6" style="display:none;">
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q14. Gender preference of your roommate</label>
+            <div class="quiz-question-hint">Selecting 'Any' does not penalize compatibility scores across profiles.</div>
+            <div class="quiz-options-grid" data-field="roommate_gender_preference">
+              <div class="quiz-option-card" onclick="selectQuizOption('roommate_gender_preference', 'Male', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">👨 Male</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('roommate_gender_preference', 'Female', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">👩 Female</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('roommate_gender_preference', 'Any', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🌈 Any (No Preference)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q15. Age preference of your roommate</label>
+            <div class="quiz-options-grid" data-field="roommate_age_preference">
+              <div class="quiz-option-card" onclick="selectQuizOption('roommate_age_preference', '17–25', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🎓 17–25 (College / Grad)</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('roommate_age_preference', '25–35', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">💼 25–35 (Young Professional)</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('roommate_age_preference', '35–45', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">👔 35–45</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('roommate_age_preference', '45+', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🌟 45+</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q16. Occupation</label>
+            <div class="quiz-options-grid" data-field="occupation">
+              <div class="quiz-option-card" onclick="selectQuizOption('occupation', 'Student', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🎒 Student</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('occupation', 'Business', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">📈 Business</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('occupation', 'Job', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">💼 Job (Salaried)</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('occupation', 'Freelancer', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">💻 Freelancer / Remote</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 7: PETS, CLEANLINESS & SPACE (Q17, Q18, Q19) -->
+        <div class="quiz-step-panel" id="quiz-step-7" style="display:none;">
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q17. What do you prefer regarding pets?</label>
+            <div class="quiz-options-grid" data-field="pet_preference">
+              <div class="quiz-option-card" onclick="selectQuizOption('pet_preference', '0 Pet tolerance', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🚫 0 Pet tolerance</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('pet_preference', 'Doesn\'t matter', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🐾 Doesn't matter</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('pet_preference', 'Even I have a pet', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🐕 Even I have a pet</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('pet_preference', 'As long as boundaries are maintained', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🏡 As long as boundaries are maintained</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q18. How tidy do you normally keep the room?</label>
+            <div class="quiz-options-grid" data-field="cleanliness_level">
+              <div class="quiz-option-card" onclick="selectQuizOption('cleanliness_level', 'Very tidy and organized', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">✨ Very tidy and organized</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('cleanliness_level', 'Reasonably tidy', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🧹 Reasonably tidy</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('cleanliness_level', 'A little messy is fine', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🛋️ A little messy is fine</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('cleanliness_level', 'Mess doesn\'t bother me', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">📦 Mess doesn't bother me</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-question-block">
+            <label class="quiz-question-label">Q19. How important is personal space to you?</label>
+            <div class="quiz-options-grid" data-field="personal_space_importance">
+              <div class="quiz-option-card" onclick="selectQuizOption('personal_space_importance', 'Extremely important', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🛡️ Extremely important</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('personal_space_importance', 'Quite important', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🔑 Quite important</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('personal_space_importance', 'Somewhat important', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">🚪 Somewhat important</div>
+              </div>
+              <div class="quiz-option-card" onclick="selectQuizOption('personal_space_importance', 'Not very important', this)">
+                <div class="quiz-radio-indicator"></div>
+                <div class="quiz-option-text">💬 Not very important</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 8: REVIEW & CALCULATE -->
+        <div class="quiz-step-panel" id="quiz-step-8" style="display:none;">
+          <div style="text-align:center; margin-bottom:20px;">
+            <span style="font-size:2.5rem;">🎉</span>
+            <h3 style="font-size:1.35rem; font-weight:800; margin:6px 0;">Review Your Compatibility Profile</h3>
+            <p style="color:var(--text-secondary); font-size:0.88rem; max-width:480px; margin:0 auto;">
+              All 19 questions are completed. We will calculate personalized match percentages for each roommate profile.
+            </p>
+          </div>
+
+          <div class="quiz-review-grid" id="quiz-review-summary-grid">
+            <!-- Dynamically populated review items -->
+          </div>
+
+          <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:12px; padding:14px 18px; font-size:0.85rem; color:#166534; margin-bottom:16px;">
+            🔒 <strong>Saved to Supabase:</strong> Your preferences are securely associated with your account and will immediately recalibrate every roommate's match score.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quiz Navigation Footer -->
+      <div class="quiz-modal-footer">
+        <button class="btn btn-secondary" id="quiz-btn-back" onclick="handleQuizPrevStep()" style="display:none;">
+          ← Back
+        </button>
+        <div style="flex:1;"></div>
+        <button class="btn btn-primary" id="quiz-btn-next" onclick="handleQuizNextStep()">
+          Next Step →
+        </button>
+        <button class="btn btn-primary" id="quiz-btn-submit" onclick="submitCompatibilityQuiz()" style="display:none; background:#10B981; border-color:#059669;">
+          Complete Quiz &amp; Calculate Matches 🎯
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 20: POST-LOGIN PROFILE COMPLETION MODAL
+       ========================================================================== -->
+  <div class="details-modal-backdrop" id="profile-completion-modal">
+    <div class="details-modal-container" style="max-width: 440px;">
+      <button class="modal-close-btn" onclick="closeProfileCompletionModal()">✕</button>
+      <div style="padding: 28px;">
+        <span style="font-size: 0.78rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">
+          Profile Details
+        </span>
+        <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin: 4px 0 6px 0;">
+          Complete Your Profile 👋
+        </h3>
+        <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 20px; line-height: 1.45;">
+          Add your Gender and Date of Birth to optimize your personalized roommate matches and trust score.
+        </p>
+
+        <form id="profile-completion-form" onsubmit="submitProfileCompletion(event)">
+          <div class="val-form-group" style="margin-bottom: 14px;">
+            <label>Gender</label>
+            <select class="val-select" id="completion-gender-select" style="width: 100%;" required>
+              <option value="" disabled selected>Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+          </div>
+
+          <div class="val-form-group" style="margin-bottom: 18px;">
+            <label>Date of Birth</label>
+            <input type="date" class="val-input" id="completion-dob-input" style="width: 100%;" required />
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 3px;">
+              Cannot be in the future.
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeProfileCompletionModal()">
+              Skip for now
+            </button>
+            <button type="submit" class="btn btn-primary" style="flex: 1;">
+              Save &amp; Continue
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- JavaScript Modules -->
   <script src="js/data.js"></script>
+  <script src="js/compatibility.js"></script>
   <script src="js/app.js"></script>
 </body>
+
+
 </html>

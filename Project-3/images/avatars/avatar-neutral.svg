@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="neutralBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+    <linearGradient id="skinTone" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fad5b3" />
+      <stop offset="100%" stop-color="#f3b98e" />
+    </linearGradient>
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="shirtGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+  </defs>
+
+  <!-- Circular background -->
+  <circle cx="100" cy="100" r="100" fill="url(#neutralBg)" />
+
+  <!-- Body / Torso -->
+  <path d="M 40 185 C 40 145, 70 135, 100 135 C 130 135, 160 145, 160 185 C 160 195, 140 200, 100 200 C 60 200, 40 195, 40 185 Z" fill="url(#shirtGrad)" />
+
+  <!-- Collar / Shirt Detail -->
+  <path d="M 88 135 L 100 156 L 112 135 Z" fill="#ffffff" />
+  <path d="M 76 137 L 88 152 L 95 137 Z" fill="#e2e8f0" />
+  <path d="M 124 137 L 112 152 L 105 137 Z" fill="#e2e8f0" />
+
+  <!-- Neck -->
+  <rect x="88" y="112" width="24" height="28" rx="8" fill="url(#skinTone)" />
+  <path d="M 88 124 C 94 130, 106 130, 112 124 Z" fill="#e59f71" opacity="0.4" />
+
+  <!-- Head / Face -->
+  <ellipse cx="100" cy="85" rx="36" ry="42" fill="url(#skinTone)" />
+
+  <!-- Ears -->
+  <circle cx="63" cy="86" r="8" fill="url(#skinTone)" />
+  <circle cx="137" cy="86" r="8" fill="url(#skinTone)" />
+
+  <!-- Hair - Modern neutral styling -->
+  <path d="M 64 80 C 62 50, 75 34, 100 34 C 125 34, 138 50, 136 80 C 130 68, 120 62, 100 62 C 80 62, 70 68, 64 80 Z" fill="url(#hairGrad)" />
+  <!-- Hair swoop -->
+  <path d="M 65 72 C 72 52, 92 48, 118 52 C 104 56, 82 62, 65 72 Z" fill="#475569" opacity="0.6" />
+
+  <!-- Glasses / Minimalist Neutral Feature (optional, stylish and friendly) -->
+  <circle cx="86" cy="84" r="11" fill="none" stroke="#334155" stroke-width="2.5" />
+  <circle cx="114" cy="84" r="11" fill="none" stroke="#334155" stroke-width="2.5" />
+  <line x1="97" y1="84" x2="103" y2="84" stroke="#334155" stroke-width="2.5" />
+  <path d="M 75 83 L 65 80" stroke="#334155" stroke-width="2.2" stroke-linecap="round" />
+  <path d="M 125 83 L 135 80" stroke="#334155" stroke-width="2.2" stroke-linecap="round" />
+
+  <!-- Smile -->
+  <path d="M 92 104 Q 100 112 108 104" fill="none" stroke="#b45309" stroke-width="2.2" stroke-linecap="round" />
+</svg>
