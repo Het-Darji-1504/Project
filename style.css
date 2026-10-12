@@ -372,12 +372,12 @@ html {
 
 .community-card {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     width: min(100%, 430px);
     padding: 30px;
-    border: 1px solid rgba(255, 255, 255, .28);
+    border: 2px dotted #d8e0d8;
     border-radius: 22px;
-    background: rgba(255, 255, 255, .09);
+    background: #2d5a4c;
     box-shadow: 0 12px 32px rgba(10, 40, 25, .12);
     text-align: left;
 }
@@ -466,14 +466,7 @@ html {
 
 .about-action { margin-top: 30px; text-align: center; }
 
-.site-footer {
-    padding: 22px 6%;
-    text-align: center;
-    color: #4b5a4e;
-    font-size: 12px;
-    background: #eaefea;
-    border-top: 1px solid #d8e0d8;
-}
+
 
 .login-page { min-height: 100vh; display: flex; flex-direction: column; }
 .login-page main { flex: 1; }
@@ -496,4 +489,88 @@ html {
     .hero-actions { align-items: stretch; flex-direction: column; }
     .primary-action, .secondary-action { width: 100%; }
     .about-section { padding: 52px 5%; }
+}
+
+.society-management {
+    padding: 70px 6% 76px;
+    background: #f8fbf8;
+    border-top: 1px solid #d8e0d8;
+    font-size: 20px;
+    text-align: center;
+}
+
+.society-management h2 {
+    color: #17231b;
+    font-size: clamp(27px, 3vw, 38px);
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.society-management p {
+    margin-bottom:20px;
+
+}
+
+.committee-grid{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    padding: 20px 0;
+}
+
+.committee-card {
+    background-color: #fff;
+    border-radius: 24px;
+    padding: 28px 16px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+
+.committee-photo{
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #D5B45D;
+}
+
+.member-role {
+    color: #17634E;
+    font-size: 18px;
+    letter-spacing: 1px;
+    margin: 20px 0 12px;
+}
+
+.member-name {
+    color: #164B3B;
+    font-size: 24px;
+    margin: 0;
+} 
+.initials-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 4px solid #D5B45D;
+    background-color: #17664F;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 36px;
+    font-weight: 700;
+}
+
+
+
+
+.site-footer {
+    padding: 22px 6%;
+    text-align: center;
+    color: #4b5a4e;
+    font-size: 12px;
+    background: #eaefea;
+    border-top: 1px solid #d8e0d8;
 }
