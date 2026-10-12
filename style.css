@@ -373,35 +373,43 @@ html {
 .community-card {
     position: relative;
     z-index: 1;
-    width: min(310px, 100%);
-    padding: 30px 24px;
-    border: 1px solid rgba(255,255,255,.9);
-    border-radius: 18px;
-    background: rgba(255,255,255,.94);
-    box-shadow: 0 16px 40px rgba(20,50,25,.12);
-    text-align: center;
+    width: min(100%, 430px);
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, .28);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, .09);
+    box-shadow: 0 12px 32px rgba(10, 40, 25, .12);
+    text-align: left;
 }
 
-.community-icon {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 14px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f0fdf4;
-    color: #166534;
-    font-size: 36px;
+.community-count {
+    color: #fff;
+    font-size: clamp(48px, 6vw, 68px);
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 8px;
 }
 
 .community-title {
-    font-size: 19px;
-    font-weight: 800;
-    margin-bottom: 7px;
+    color: #fff;
+    font-size: clamp(19px, 2.3vw, 25px);
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 18px;
 }
 
-.community-caption { font-size: 12px; color: #647568; }
+.community-message {
+    color: rgba(255, 255, 255, .86);
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.community-caption {
+    color: rgba(255, 255, 255, .78);
+    font-size: 13px;
+    line-height: 1.5;
+}
 
 .about-section {
     padding: 70px 6% 76px;
