@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Darshanam Green</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+    <header class="header">
+        <nav class="navbar" aria-label="Main navigation">
+            <a class="logo" href="index.html">
+                <span class="logo-circle" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20a10 10 0 0010-10 25.9 25.9 0 00-1.04-7.281 1 1 0 00-1.755-.325C15.833 5.5 13 5.5 9.8 6.1A7 7 0 0011 20"/><path d="M2 21a5 5 0 012.911-4.544C7.613 15.212 8.351 15.24 11 13"/></svg>
+                </span>
+                <span>Darshanam Green</span>
+            </a>
+            <a class="profile-link" href="index.html#about">About Us</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="login-section" aria-labelledby="login-title">
+            <div class="login-card">
+                <h1 id="login-title">Create Your Account</h1>
+                <p class="login-subtitle">Log in to access your society services.</p>
+                <form class="login-form" action="#" method="get">
+                    <label for="username">Owner's Name</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your name" autocomplete="name" required>
+
+                    <label for="house-no">House Number</label>
+                    <input type="text" id="house-no" name="house-no" placeholder="Example: A1/130" autocomplete="off" required>
+
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" autocomplete="email" required>
+
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+
+                    <button type="submit" class="login-button">Create Account</button>
+                </form>
+                <p class="login-note">Need help signing in? <a href="index.html#support">Contact Support</a></p>
+                <p class="login-note">Already have an account? <a href="#login">Log in</a></p>
+                <p class="back-home"><a href="index.html">← Back to Home</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2026 Darshanam Green. Built for better community living.</p>
+    </footer>
+</body>
+</html>
