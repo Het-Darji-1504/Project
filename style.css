@@ -581,8 +581,8 @@ html {
 
 .emergency-contacts {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
-    column-gap: 12px;
+    grid-template-columns: 10ch auto minmax(0, 1fr);
+    column-gap: 8px;
     row-gap: 12px;
     width: 100%;
     align-items: center;
@@ -595,7 +595,7 @@ html {
 }
 
 .emergency-contacts span:nth-child(3n + 2) {
-    text-align: center;
+    text-align: left;
 }
 
 .emergency-contacts span:nth-child(3n) {
